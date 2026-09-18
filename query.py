@@ -16,20 +16,18 @@ def build_index(data_dir=DATA_DIR, filename=DEFAULT_FILENAME):
 
     try:
         reader = PdfReader(filepath)
-        text = ""
-        for page in reader.pages:
+        documents = []
+        for page_num, page in enumerate(reader.pages, start=1):
             page_text = page.extract_text()
-            if page_text:
-                text += page_text
+            if page_text and page_text.strip():
+                documents.append(Document(text=page_text, metadata={"page": page_num}))
     except Exception as e:
         print(f"Error: couldn't read the PDF. It may be corrupted or password-protected. Details: {e}")
         sys.exit(1)
 
-    if not text.strip():
+    if not documents:
         print("Error: the PDF was read but no text was extracted. It may be a scanned image PDF that needs OCR.")
         sys.exit(1)
-
-    documents = [Document(text=text)]
 
     try:
         index = VectorStoreIndex.from_documents(documents)
@@ -49,7 +47,8 @@ def query_index(index, question):
 
     print("\n--- Checkpoint 2: Retrieved chunks ---")
     for node in response.source_nodes:
-        print(f"Score: {node.score:.3f}")
+        page = node.metadata.get("page", "unknown")
+        print(f"Page: {page} | Relevance score: {node.score:.3f}")
         print(node.text[:200])
         print("---")
 
