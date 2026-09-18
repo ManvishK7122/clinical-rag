@@ -3,10 +3,11 @@ from pypdf import PdfReader
 from dotenv import load_dotenv
 import os
 import sys
+from config import DATA_DIR, DEFAULT_FILENAME, SIMILARITY_TOP_K, CHUNK_PREVIEW_LENGTH
 
 load_dotenv()
 
-def build_index(data_dir="data", filename="Sample_ICU_note.pdf"):
+def build_index(data_dir=DATA_DIR, filename=DEFAULT_FILENAME):
     filepath = f"{data_dir}/{filename}"
 
     if not os.path.exists(filepath):
@@ -40,7 +41,7 @@ def build_index(data_dir="data", filename="Sample_ICU_note.pdf"):
 
 def query_index(index, question):
     try:
-        query_engine = index.as_query_engine(similarity_top_k=4)
+        query_engine = index.as_query_engine(similarity_top_k=SIMILARITY_TOP_K)
         response = query_engine.query(question)
     except Exception as e:
         print(f"Error answering the question: {e}")
@@ -59,7 +60,7 @@ if __name__ == "__main__":
     index, documents = build_index()
 
     print("\n--- Checkpoint 1: Document text ---")
-    print(documents[0].text[:300])
+    print(documents[0].text[:CHUNK_PREVIEW_LENGTH])
 
     print("\nReady. Type your question (or 'quit' to exit):\n")
     while True:
