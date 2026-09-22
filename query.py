@@ -4,6 +4,7 @@ from dotenv import load_dotenv
 import os
 import sys
 from config import DATA_DIR, DEFAULT_FILENAME, SIMILARITY_TOP_K, CHUNK_PREVIEW_LENGTH
+from prompts import get_clinical_query_engine
 
 load_dotenv()
 
@@ -39,7 +40,7 @@ def build_index(data_dir=DATA_DIR, filename=DEFAULT_FILENAME):
 
 def query_index(index, question):
     try:
-        query_engine = index.as_query_engine(similarity_top_k=SIMILARITY_TOP_K)
+        query_engine = get_clinical_query_engine(index, similarity_top_k=SIMILARITY_TOP_K)
         response = query_engine.query(question)
     except Exception as e:
         print(f"Error answering the question: {e}")
