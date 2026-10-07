@@ -1,12 +1,14 @@
-from llama_index.core import VectorStoreIndex, Document
+from llama_index.core import VectorStoreIndex, Document, Settings
+from llama_index.llms.openai import OpenAI as LlamaOpenAI
 from pypdf import PdfReader
 from dotenv import load_dotenv
 import os
 import sys
-from config import DATA_DIR, DEFAULT_FILENAME, SIMILARITY_TOP_K, CHUNK_PREVIEW_LENGTH
+from config import DATA_DIR, DEFAULT_FILENAME, SIMILARITY_TOP_K, CHUNK_PREVIEW_LENGTH, ANSWER_MODEL, ANSWER_TEMPERATURE
 from prompts import get_clinical_query_engine
 
 load_dotenv()
+Settings.llm = LlamaOpenAI(model=ANSWER_MODEL, temperature=ANSWER_TEMPERATURE)
 
 def build_index(data_dir=DATA_DIR, filename=DEFAULT_FILENAME):
     filepath = f"{data_dir}/{filename}"
@@ -56,6 +58,7 @@ def query_index(index, question):
     return response
 
 if __name__ == "__main__":
+    print(f"Answer model: {ANSWER_MODEL} (temperature {ANSWER_TEMPERATURE})")
     print("Loading and indexing document...")
     index, documents = build_index()
 

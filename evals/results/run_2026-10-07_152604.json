@@ -1,0 +1,154 @@
+{
+  "timestamp": "2026-10-07_152604",
+  "judge_model": "gpt-4o-mini",
+  "similarity_top_k": 6,
+  "passed": 7,
+  "total": 10,
+  "score": 0.7,
+  "results": [
+    {
+      "id": "q1",
+      "question": "What medications was this patient given?",
+      "expected": "Lists medications actually administered. Dexmedetomidine must NOT be listed as given, since the note says it was only considered ('not today'). Active vasopressors (norepinephrine, vasopressin) should be included.",
+      "answer": "- Ceftriaxone 1g IV Q24h for pan-sensitive pneumococcus (page 4)\n- Procalcitonin trending down (page 4)\n- Fentanyl bolus given for pain (page 2)\n- Insulin infusion protocol for glucose control (page 4)",
+      "cited_pages": [
+        1,
+        2,
+        3,
+        4,
+        5
+      ],
+      "verdict": "VERDICT: FAIL  \nREASON: The answer omits the active vasopressors (norepinephrine and vasopressin) that were administered, and it inaccurately includes procalcitonin as a medication given, while it is actually a lab result; additionally, the cited pages do not support the claims made in the answer.",
+      "passed": false
+    },
+    {
+      "id": "q2",
+      "question": "What are the patient's current vital signs?",
+      "expected": "",
+      "answer": "Temperature: 38.1\u00b0C (100.6\u00b0F) \u2014 trending down\nBlood Pressure / MAP: 101/58 mmHg / MAP 72 mmHg \u2014 on vasopressors\nHeart Rate: 96 bpm \u2014 regular\nRespiratory Rate: Vent rate 18 + patient 2\u20134 spontaneous above vent = total ~20\u201322\nO2 Saturation: 94% on FiO2 0.65, PEEP 14",
+      "cited_pages": [
+        1,
+        2,
+        3,
+        5
+      ],
+      "verdict": "VERDICT: PASS  \nREASON: The AI's answer accurately reflects the patient's current vital signs as documented in the source, and the cited pages plausibly contain the relevant information.",
+      "passed": true
+    },
+    {
+      "id": "q3",
+      "question": "What is the primary diagnosis?",
+      "expected": "Septic shock secondary to community-acquired pneumonia, with ARDS, AKI, and multi-organ dysfunction. Must use the Primary ICU Diagnosis, not the Primary ICD-10 billing code.",
+      "answer": "The primary diagnosis is sepsis due to Streptococcus pneumoniae (ICD-10 code A40.3). (page 6)",
+      "cited_pages": [
+        1,
+        2,
+        3,
+        6
+      ],
+      "verdict": "VERDICT: FAIL  \nREASON: The AI's answer incorrectly identifies the primary diagnosis as \"sepsis due to Streptococcus pneumoniae\" instead of the correct primary diagnosis of \"septic shock secondary to community-acquired pneumonia with ARDS, AKI, and multi-organ dysfunction,\" and the cited pages do not support this misinterpretation.",
+      "passed": false
+    },
+    {
+      "id": "q4",
+      "question": "What follow-up actions are planned?",
+      "expected": "",
+      "answer": "1. Repeat ABG in 4 hours after FiO2 trial of 0.60 (page 5).\n2. Bedside TTE today PM (page 5).\n3. Vasopressor wean assessment Q2h (page 5).\n4. HIT antibody results expected today \u2014 review and adjust argatroban if positive (page 5).\n5. Family call at 18:00 (page 5).\n6. Hematology consultation if HIT positive (page 5).\n7. Repeat CXR tomorrow AM (page 5).\n8. Repeat comprehensive labs tomorrow AM (page 5).\n9. ID to review procalcitonin trend and confirm antibiotic end date (05/09/2026) (page 5).\n10. Goals of care re-discussion if clinical trajectory changes (page 5).",
+      "cited_pages": [
+        2,
+        3,
+        4,
+        5
+      ],
+      "verdict": "VERDICT: PASS  \nREASON: The AI's answer accurately reflects the follow-up actions planned as detailed in the source document, and all cited pages (2, 3, 4, 5) plausibly contain the relevant information.",
+      "passed": true
+    },
+    {
+      "id": "q5",
+      "question": "What lab results are abnormal?",
+      "expected": "Lactate must NOT be called abnormal, since the note says it normalized (1.6, down from 5.2). Values the note itself flags as abnormal should be included.",
+      "answer": "1. WBC: 18.4 (page 3, 7a LABORATORY STUDIES)\n2. Hgb: 8.9 (page 3, 7a LABORATORY STUDIES)\n3. Plt: 98 (page 3, 7a LABORATORY STUDIES)\n4. HCO3: 22 (page 3, 7a LABORATORY STUDIES)\n5. BUN: 68 (page 3, 7a LABORATORY STUDIES)\n6. Cr: 4.8 (page 3, 7a LABORATORY STUDIES)\n7. Albumin: 1.9 (page 3, 7a LABORATORY STUDIES)\n8. AST: 68 (page 3, 7a LABORATORY STUDIES)\n9. ALT: 52 (page 3, 7a LABORATORY STUDIES)\n10. Total Bili: 2.1 (page 3, 7a LABORATORY STUDIES)\n11. Procalcitonin: 14.2 (page 3, 7a LABORATORY STUDIES)\n12. CRP: 186 (page 3, 7a LABORATORY STUDIES)\n13. D-dimer: 8,400 (page 3, 7a LABORATORY STUDIES)",
+      "cited_pages": [
+        2,
+        3,
+        4,
+        6
+      ],
+      "verdict": "VERDICT: FAIL  \nREASON: The answer incorrectly includes HCO3 (22) as abnormal, while the source document does not indicate it as such; additionally, the answer omits the lactate value of 1.6, which is noted as normalized and should not be included as abnormal.",
+      "passed": false
+    },
+    {
+      "id": "q6",
+      "question": "What is the code status?",
+      "expected": "",
+      "answer": "Code status: FULL CODE (confirmed with wife 05/05) (page 5)",
+      "cited_pages": [
+        1,
+        2,
+        3,
+        5,
+        6
+      ],
+      "verdict": "VERDICT: PASS  \nREASON: The AI's answer accurately states the code status as \"FULL CODE\" and correctly cites the source document, as this information is found on page 5.",
+      "passed": true
+    },
+    {
+      "id": "q7",
+      "question": "Are there any allergies noted?",
+      "expected": "No allergies are documented. The answer should say this rather than guessing.",
+      "answer": "No allergies are noted in the clinical note. (page 1)",
+      "cited_pages": [
+        1,
+        2,
+        3,
+        4
+      ],
+      "verdict": "VERDICT: PASS  \nREASON: The AI's answer accurately states that no allergies are noted in the clinical note, which is supported by the source document, and the cited pages plausibly contain the relevant information.",
+      "passed": true
+    },
+    {
+      "id": "q8",
+      "question": "What is the ventilator/respiratory status?",
+      "expected": "Includes the actual ventilator settings (FiO2, PEEP, tidal volume) and P/F ratio, not just physical exam findings.",
+      "answer": "The patient is intubated with an endotracheal tube in place. The ventilator is set to Volume Control (VC-AC) mode with an FiO2 of 0.65 and PEEP of 14 cmH2O. The respiratory rate is 18 breaths per minute, with a tidal volume of 448 mL. The plateau pressure is 22 cmH2O, which is within the lung-protective target. The ABG at 06:00 shows a pH of 7.38, PaCO2 of 42, PaO2 of 76, HCO3 of 24, and SpO2 of 94%. The patient has a P/F ratio of 117, indicating moderate ARDS that is improving from severe. The patient is not ready for a spontaneous breathing trial due to the current settings and hemodynamic support. (page 5)",
+      "cited_pages": [
+        1,
+        2,
+        3,
+        5
+      ],
+      "verdict": "VERDICT: PASS  \nREASON: The AI's answer accurately reflects the ventilator settings, P/F ratio, and clinical status of the patient as detailed in the source document, and the cited pages plausibly contain the relevant information.",
+      "passed": true
+    },
+    {
+      "id": "q9",
+      "question": "What did the family meeting cover?",
+      "expected": "",
+      "answer": "The family meeting covered the patient's prognosis, which was discussed as having an improving trajectory over the past 24 hours but with the patient remaining critically ill with significant organ dysfunction. The wife expressed understanding of the situation. Palliative care was not yet engaged, but it was mentioned that it would be reassessed if the clinical trajectory were to reverse. The next family update was scheduled for the same day at 18:00 by phone or bedside. (Page 5, GOC Goals of Care / Code Status)",
+      "cited_pages": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ],
+      "verdict": "VERDICT: PASS  \nREASON: The AI's answer accurately reflects the content of the family meeting as described in the source document, and the cited page (GOC section) contains the relevant information discussed.",
+      "passed": true
+    },
+    {
+      "id": "q10",
+      "question": "What is the plan for weaning vasopressors?",
+      "expected": "",
+      "answer": "The plan for weaning vasopressors is to continue to wean norepinephrine by 0.02 mcg/kg/min every 2 hours if the mean arterial pressure (MAP) is sustained above 68 mmHg. Vasopressin will be held at 0.03 units/min until norepinephrine is below 0.08, at which point an attempt to wean vasopressin will be made. This information is found on page 4 under the Cardiovascular section.",
+      "cited_pages": [
+        2,
+        3,
+        4,
+        5
+      ],
+      "verdict": "VERDICT: PASS  \nREASON: The AI's answer accurately reflects the plan for weaning vasopressors as stated in the source document, and the cited page (4) contains the relevant information regarding the weaning strategy for norepinephrine and vasopressin.",
+      "passed": true
+    }
+  ]
+}
