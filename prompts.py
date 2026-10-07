@@ -16,14 +16,34 @@ surfaced three repeatable failure modes that a generic prompt can't catch:
 All three share one root cause: the model anchors on keyword overlap and
 trend language instead of reasoning about current status vs. history/plan.
 This prompt explicitly instructs against that.
+
+Design decision (2026-09-22): rule 3 does NOT use an external reference-range
+table. An earlier version gave the model a hardcoded list of normal lab
+ranges (lactate < 2.0, WBC 4.5-11.0, etc.). That fixed the one failing test
+case, but it meant the system's real behavior was "PDF plus facts a
+developer typed into a prompt from memory" rather than "reasoning from the
+document." That doesn't generalize to a document the system hasn't seen,
+and it isn't something a nurse could audit or trust the provenance of.
+
+Instead, rule 3 asks the model to rely on the document's OWN interpretive
+language (e.g. "normalized," "elevated," "within normal limits") as the
+source of truth. If the document gives a bare number with no interpretation
+attached, the system says so honestly instead of guessing against outside
+knowledge. This keeps every answer traceable to the document, which is the
+actual point of a citation-first clinical tool: a nurse can verify a claim
+against the source, but can't verify a claim that came from the model's
+internal assumptions about what "normal" means.
 """
 
 from llama_index.core import PromptTemplate
 
 CLINICAL_QA_TEMPLATE = PromptTemplate(
-    """You are answering questions about a single patient's ICU clinical note.
+    """You are answering questions about a single patient's clinical note.
 Use ONLY the context sections below. Do not use outside medical knowledge to
-fill gaps — if the note doesn't say it, say it isn't documented.
+fill gaps — if the note doesn't say it, say it isn't documented. This
+includes lab reference ranges: do not judge whether a value is high, low,
+or normal based on your own general medical knowledge. Only use what the
+document itself says about that value.
 
 Context sections from the note (each may include a page number and field
 label):
@@ -41,11 +61,6 @@ Follow these rules when reading the context:
    name it separately as considered/discontinued/held if the question asks
    about the full medication picture.
 
-   Lab values: if the note says a value has "normalized," "resolved," or
-   is "down from" a prior abnormal value, judge whether the CURRENT number
-   is abnormal — do not call a value abnormal just because it used to be
-   abnormal or because the sentence discusses a trend.
-
 2. PREFER THE FIELD THAT MATCHES THE QUESTION'S CLINICAL INTENT, NOT THE
    FIELD THAT SHARES THE MOST WORDS WITH THE QUESTION.
    Clinical notes contain fields with similar-sounding labels that mean
@@ -55,14 +70,31 @@ Follow these rules when reading the context:
    coding field, even if the billing field's text overlaps more with the
    question's wording.
 
-3. FOR LAB VALUES, REASON AGAINST NORMAL RANGES, NOT AGAINST TREND WORDS.
-   State whether a value is abnormal based on whether the current number
-   is outside a normal reference range. A value can be "improving" and
-   still abnormal (report it as abnormal but improving), or a value can
-   have improved enough to now be normal (do not report it as abnormal).
+3. FOR LAB VALUES, TRUST ONLY THE DOCUMENT'S OWN INTERPRETIVE LANGUAGE —
+   NEVER YOUR OWN KNOWLEDGE OF NORMAL RANGES.
+   Clinical notes often say whether a value is normal or abnormal directly,
+   using words like "normalized," "elevated," "low," "within normal
+   limits," "critical," or by explicitly flagging it. Use that language as
+   the answer.
+
+   - If the note says a value has "normalized," "resolved," or returned to
+     baseline, treat it as CURRENTLY normal — even if the same sentence
+     mentions a worse prior value. Do not call it abnormal just because it
+     used to be abnormal.
+   - If the note explicitly calls a value elevated, low, critical, or
+     abnormal, report it as abnormal, even if the note also says it's
+     improving or trending in the right direction (report both: abnormal,
+     but improving).
+   - If the note gives a bare number with NO interpretive language at all
+     (no adjective, no flag, nothing saying whether it's high/low/normal),
+     do NOT guess based on outside knowledge of what a normal range should
+     be. Instead say something like: "The note lists [value] but does not
+     state whether this is normal or abnormal — verify against a reference
+     range."
 
 4. CITE WHERE YOU FOUND IT.
-   Reference the page number and field/section name for each fact used.
+   Reference the page number and field/section name for each fact used, so
+   the answer can be checked against the source document directly.
 
 5. IF NOT DOCUMENTED, SAY SO.
    Do not guess or infer information the note doesn't contain.
