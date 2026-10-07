@@ -19,10 +19,10 @@
     "question": "What follow-up actions are planned?",
     "expected": ""
   },
-  {
+   {
     "id": "q5",
     "question": "What lab results are abnormal?",
-    "expected": "Lactate must NOT be called abnormal, since the note says it normalized (1.6, down from 5.2). Values the note itself flags as abnormal should be included."
+    "expected": "Grade ONLY by the labels written in the note, never by your own knowledge of normal ranges. The note labels these as abnormal and the answer must include them: Plt 98 (low, thrombocytopenia), BUN 68 (elevated), Cr 4.8 (severe AKI), Albumin 1.9 (severely low), Hgb 8.9 (anemia of critical illness, stable), Fibrinogen 420 (elevated), D-dimer 8,400 (elevated), and the liver tests the note groups as mild transaminitis (AST 68, ALT 52, Alk Phos 110, Total Bili 2.1; reporting them as one group is fine). These must NOT be called abnormal: Lactate 1.6 (normalized), Glucose 142 (within the stated target), aPTT 48 (therapeutic). WBC, CRP, procalcitonin, PT, INR, and HCO3 have no abnormal label in the note, only trends or nothing: mentioning them is fine only if the answer says the note does not label them abnormal; calling any of them elevated or abnormal is a FAIL."
   },
   {
     "id": "q6",

@@ -1,0 +1,197 @@
+Question: What medications was this patient given?
+
+--- Checkpoint 2: Retrieved chunks ---
+Score: 0.796
+LFT s mildly elevated — monitor; ischemic hepatitis improving as lactate normalizes.
+ID INFECTIOUS DISEASE
+Ceftriaxone 1g IV Q24h — Day 4 (de-escalated from vancomycin + pip-tazo per ID Day 2). Cultur
+---
+Score: 0.793
+RASS target -1 to 0. SAT performed today — patient communicating but CAM-ICU positive for delirium.
+Reorientation Q4h. Family voice recordings at bedside. Avoid benzodiazepines if possible — consider 
+---
+
+--- Checkpoint 3: Final answer ---
+The patient was given ceftriaxone, vancomycin, pip-tazo, argatroban, insulin, fentanyl, midazolam, dexmedetomidine, norepinephrine, vasopressin, and pantoprazole.
+
+Question: What medications was this patient given?
+
+--- Checkpoint 2: Retrieved chunks ---
+Score: 0.796
+LFT s mildly elevated — monitor; ischemic hepatitis improving as lactate normalizes.
+ID INFECTIOUS DISEASE
+Ceftriaxone 1g IV Q24h — Day 4 (de-escalated from vancomycin + pip-tazo per ID Day 2). Cultur
+---
+Score: 0.793
+RASS target -1 to 0. SAT performed today — patient communicating but CAM-ICU positive for delirium.
+Reorientation Q4h. Family voice recordings at bedside. Avoid benzodiazepines if possible — consider 
+---
+
+--- Checkpoint 3: Final answer ---
+The patient was given ceftriaxone, vancomycin, pip-tazo, argatroban, insulin, fentanyl, midazolam, dexmedetomidine, norepinephrine, vasopressin, and pantoprazole.
+
+Question: What are the patient's current vital signs?
+
+--- Checkpoint 2: Retrieved chunks ---
+Score: 0.829
+PE Physical Examination6 FOCUSED CRITICAL CARE EXAM
+6a NEURO / CV / RESPIRATORY
+Neurological
+RASS -1. Opens eyes to voice, follows simple commands. Pupils 3 mm,
+equal, reactive. No spontaneous movemen
+---
+Score: 0.817
+(7) NUTRITION: T ube feeds (Peptamen 1.5 at 45 mL/hr)
+running throughout night — no tube feed intolerance noted. (8) FAMILY: Wife visited at 18:00 yesterday — family meeting held with Dr. Morales (see
+---
+
+--- Checkpoint 3: Final answer ---
+Temperature: 38.1°C (100.6°F)
+Blood Pressure / MAP: 101/58 mmHg / MAP 72 mmHg
+Heart Rate: 96 bpm
+Respiratory Rate: Vent rate 18 + patient 2–4 spontaneous above vent = total ~20–22
+O2 Saturation: 94% on FiO2 0.65, PEEP 14
+Weight: 94 kg
+
+Question: What is the primary diagnosis?
+
+--- Checkpoint 2: Retrieved chunks ---
+Score: 0.763
+PE Physical Examination6 FOCUSED CRITICAL CARE EXAM
+6a NEURO / CV / RESPIRATORY
+Neurological
+RASS -1. Opens eyes to voice, follows simple commands. Pupils 3 mm,
+equal, reactive. No spontaneous movemen
+---
+Score: 0.755
+LFT s mildly elevated — monitor; ischemic hepatitis improving as lactate normalizes.
+ID INFECTIOUS DISEASE
+Ceftriaxone 1g IV Q24h — Day 4 (de-escalated from vancomycin + pip-tazo per ID Day 2). Cultur
+---
+
+--- Checkpoint 3: Final answer ---
+The primary diagnosis is severe acute respiratory distress syndrome (ARDS) with pneumonia.
+
+Question: What follow-up actions are planned?
+
+--- Checkpoint 2: Retrieved chunks ---
+Score: 0.762
+Transfer criteria: vasopressors weaned to off, FiO2 <0.40 and PEEP <8, hemodynamically stable for
+>24h, and CRRT either transitioned to intermittent HD or renal recovery evident.
+FU Follow-Up / Reasse
+---
+Score: 0.749
+LFT s mildly elevated — monitor; ischemic hepatitis improving as lactate normalizes.
+ID INFECTIOUS DISEASE
+Ceftriaxone 1g IV Q24h — Day 4 (de-escalated from vancomycin + pip-tazo per ID Day 2). Cultur
+---
+
+--- Checkpoint 3: Final answer ---
+Repeat ABG in 4 hours after FiO2 trial of 0.60, perform bedside TTE in the afternoon, assess vasopressor wean every 2 hours, review and adjust argatroban if HIT antibody is positive, make a family call at 18:00, consult hematology if HIT is positive, repeat CXR the next morning, repeat comprehensive labs the next morning, have ID review procalcitonin trend and confirm antibiotic end date, and discuss goals of care if the clinical trajectory changes.
+
+Question: What lab results are abnormal?
+
+--- Checkpoint 2: Retrieved chunks ---
+Score: 0.780
+PE Physical Examination6 FOCUSED CRITICAL CARE EXAM
+6a NEURO / CV / RESPIRATORY
+Neurological
+RASS -1. Opens eyes to voice, follows simple commands. Pupils 3 mm,
+equal, reactive. No spontaneous movemen
+---
+Score: 0.773
+Coagulation: PT 17.2, INR 1.4, aPTT 48 (therapeutic on CRRT heparin protocol), Fibrinogen 420 (elevated — acute
+phase reactant). D-dimer 8,400 (elevated — ongoing sepsis/inflammation). HIT antibody se
+---
+
+--- Checkpoint 3: Final answer ---
+Hgb, Plt, BUN, Cr, Albumin, Lactate, Procalcitonin, CRP, Fibrinogen, D-dimer, and AST are abnormal lab results.
+
+Question: What is the code status?
+
+--- Checkpoint 2: Retrieved chunks ---
+Score: 0.750
+No thyroid concerns. Metabolic acidosis: pH 7.38, HCO3 22 — normalizing with CRRT bicarbonate replacement.
+Anion gap: 18 (improving from 28 on admission).GOC GOALS OF CARE / CODE STATUS
+Code status: F
+---
+Score: 0.738
+Transfer criteria: vasopressors weaned to off, FiO2 <0.40 and PEEP <8, hemodynamically stable for
+>24h, and CRRT either transitioned to intermittent HD or renal recovery evident.
+FU Follow-Up / Reasse
+---
+
+--- Checkpoint 3: Final answer ---
+FULL CODE
+
+Question: Are there any allergies noted?
+
+--- Checkpoint 2: Retrieved chunks ---
+Score: 0.756
+PE Physical Examination6 FOCUSED CRITICAL CARE EXAM
+6a NEURO / CV / RESPIRATORY
+Neurological
+RASS -1. Opens eyes to voice, follows simple commands. Pupils 3 mm,
+equal, reactive. No spontaneous movemen
+---
+Score: 0.753
+(7) NUTRITION: T ube feeds (Peptamen 1.5 at 45 mL/hr)
+running throughout night — no tube feed intolerance noted. (8) FAMILY: Wife visited at 18:00 yesterday — family meeting held with Dr. Morales (see
+---
+
+--- Checkpoint 3: Final answer ---
+No allergies are noted in the provided context information.
+
+Question: What is the ventilator/respiratory status?
+
+--- Checkpoint 2: Retrieved chunks ---
+Score: 0.827
+PE Physical Examination6 FOCUSED CRITICAL CARE EXAM
+6a NEURO / CV / RESPIRATORY
+Neurological
+RASS -1. Opens eyes to voice, follows simple commands. Pupils 3 mm,
+equal, reactive. No spontaneous movemen
+---
+Score: 0.813
+No thyroid concerns. Metabolic acidosis: pH 7.38, HCO3 22 — normalizing with CRRT bicarbonate replacement.
+Anion gap: 18 (improving from 28 on admission).GOC GOALS OF CARE / CODE STATUS
+Code status: F
+---
+
+--- Checkpoint 3: Final answer ---
+The patient is intubated and mechanically ventilated. The breath sounds indicate bilateral crackles consistent with ARDS/pneumonia pattern. The ventilator is synchronous, and the work of breathing is supported by the ventilator.
+
+uestion: What did the family meeting cover?
+
+--- Checkpoint 2: Retrieved chunks ---
+Score: 0.717
+(7) NUTRITION: T ube feeds (Peptamen 1.5 at 45 mL/hr)
+running throughout night — no tube feed intolerance noted. (8) FAMILY: Wife visited at 18:00 yesterday — family meeting held with Dr. Morales (see
+---
+Score: 0.715
+No thyroid concerns. Metabolic acidosis: pH 7.38, HCO3 22 — normalizing with CRRT bicarbonate replacement.
+Anion gap: 18 (improving from 28 on admission).GOC GOALS OF CARE / CODE STATUS
+Code status: F
+---
+
+--- Checkpoint 3: Final answer ---
+The family meeting covered the patient's prognosis, which was discussed as showing improvement over the past 24 hours but with the patient remaining critically ill with significant organ dysfunction. The discussion included the potential for respiratory and renal recovery if vasopressors are successfully weaned and CRRT requirements decrease. The wife expressed understanding of the situation, and it was noted that palliative care had not been engaged yet but would be reassessed if the patient's trajectory were to reverse.
+
+Question: What is the plan for weaning vasopressors?
+
+--- Checkpoint 2: Retrieved chunks ---
+Score: 0.854
+RASS target -1 to 0. SAT performed today — patient communicating but CAM-ICU positive for delirium.
+Reorientation Q4h. Family voice recordings at bedside. Avoid benzodiazepines if possible — consider 
+---
+Score: 0.846
+Transfer criteria: vasopressors weaned to off, FiO2 <0.40 and PEEP <8, hemodynamically stable for
+>24h, and CRRT either transitioned to intermittent HD or renal recovery evident.
+FU Follow-Up / Reasse
+---
+
+--- Checkpoint 3: Final answer ---
+Continue to wean norepinephrine as MAP tolerates, with a target MAP greater than 65. Wean norepinephrine by 0.02 mcg/kg/min every 2 hours if MAP is sustained above 68 mmHg. Hold vasopressin at 0.03 units/min until norepinephrine is below 0.08, then attempt vasopressin wean.
+
+Question: 
+

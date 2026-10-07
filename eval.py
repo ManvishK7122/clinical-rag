@@ -76,7 +76,7 @@ def run_eval():
     print(f"Answer model: {ANSWER_MODEL} | Judge model: {JUDGE_MODEL}")
     print("Loading and indexing document...")
     index, documents = build_index()
-    source_text = "\n".join(doc.text for doc in documents)
+    source_text = "\n\n".join(f"[Page {doc.metadata['page']}]\n{doc.text}" for doc in documents)
 
     passed = 0
     total = len(questions)
