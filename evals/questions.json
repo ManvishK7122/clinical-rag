@@ -1,0 +1,52 @@
+[
+  {
+    "id": "q1",
+    "question": "What medications was this patient given?",
+    "expected": "Lists medications actually administered. Dexmedetomidine must NOT be listed as given, since the note says it was only considered ('not today'). Active vasopressors (norepinephrine, vasopressin) should be included."
+  },
+  {
+    "id": "q2",
+    "question": "What are the patient's current vital signs?",
+    "expected": ""
+  },
+  {
+    "id": "q3",
+    "question": "What is the primary diagnosis?",
+    "expected": "Septic shock secondary to community-acquired pneumonia, with ARDS, AKI, and multi-organ dysfunction. Must use the Primary ICU Diagnosis, not the Primary ICD-10 billing code."
+  },
+  {
+    "id": "q4",
+    "question": "What follow-up actions are planned?",
+    "expected": ""
+  },
+  {
+    "id": "q5",
+    "question": "What lab results are abnormal?",
+    "expected": "Lactate must NOT be called abnormal, since the note says it normalized (1.6, down from 5.2). Values the note itself flags as abnormal should be included."
+  },
+  {
+    "id": "q6",
+    "question": "What is the code status?",
+    "expected": ""
+  },
+  {
+    "id": "q7",
+    "question": "Are there any allergies noted?",
+    "expected": "No allergies are documented. The answer should say this rather than guessing."
+  },
+  {
+    "id": "q8",
+    "question": "What is the ventilator/respiratory status?",
+    "expected": "Includes the actual ventilator settings (FiO2, PEEP, tidal volume) and P/F ratio, not just physical exam findings."
+  },
+  {
+    "id": "q9",
+    "question": "What did the family meeting cover?",
+    "expected": ""
+  },
+  {
+    "id": "q10",
+    "question": "What is the plan for weaning vasopressors?",
+    "expected": ""
+  }
+]
