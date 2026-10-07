@@ -66,7 +66,7 @@
     {
       "id": "q5",
       "question": "What lab results are abnormal?",
-      "expected": "Lactate must NOT be called abnormal, since the note says it normalized (1.6, down from 5.2). Values the note itself flags as abnormal should be included.",
+      "expected": "Must include values the note itself labels abnormal: Plt 98 (low), BUN 68 (elevated), Cr 4.8 (severe AKI), Albumin 1.9 (severely low), the liver values the note calls mild transaminitis (AST 68, ALT 52), Fibrinogen 420 (elevated), D-dimer 8,400 (elevated). Lactate 1.6 must NOT be listed as abnormal (the note says normalized). Hgb (stable), coagulation values (therapeutic), and glucose must not be called abnormal. WBC, CRP, and procalcitonin have no abnormal label in the note: listing them is fine only if the answer says the note doesn't label them; calling them 'still elevated' is outside knowledge and is a fail.",
       "answer": "- WBC: 18.4 (page 3, 7a LABORATORY STUDIES)\n- Hgb: 8.9 (page 3, 7a LABORATORY STUDIES)\n- Plt: 98 (page 3, 7a LABORATORY STUDIES)\n- HCO3: 22 (page 3, 7a LABORATORY STUDIES)\n- BUN: 68 (page 3, 7a LABORATORY STUDIES)\n- Cr: 4.8 (page 3, 7a LABORATORY STUDIES)\n- Albumin: 1.9 (page 3, 7a LABORATORY STUDIES)\n- Lactate: 1.6 mmol/L (page 3, 7a LABORATORY STUDIES)\n- Procalcitonin: 14.2 ng/mL (page 3, 7a LABORATORY STUDIES)\n- CRP: 186 mg/L (page 3, 7a LABORATORY STUDIES)\n- D-dimer: 8,400 (page 3, 7a LABORATORY STUDIES)",
       "cited_pages": [
         2,
