@@ -4,3 +4,5 @@ llama-index-embeddings-openai==0.6.0
 openai==2.54.0
 pypdf==6.19.0
 python-dotenv==1.2.3
+pydantic
+requests

@@ -1,0 +1,12 @@
+{
+  "_note": "Answer key for Sample_ICU_note.pdf. Aliases separated by |. Verify every item against the note before trusting scores.",
+  "medications": {
+    "given": ["norepinephrine", "vasopressin", "fentanyl", "midazolam", "ceftriaxone", "pantoprazole", "argatroban", "insulin"],
+    "not_given": ["dexmedetomidine", "vancomycin|vanc", "piperacillin|pip tazo|zosyn"]
+  },
+  "labs": {
+    "abnormal": ["plt|platelet|platelets", "bun", "cr|creatinine", "albumin", "hgb|hemoglobin", "fibrinogen", "d dimer|ddimer", "ast", "alt", "alk phos|alkaline phosphatase", "bili|bilirubin"],
+    "not_abnormal": ["lactate", "glucose", "aptt"],
+    "not_labeled": ["wbc", "crp", "procalcitonin", "pt", "inr", "hco3|bicarbonate", "na|sodium", "k|potassium", "cl|chloride"]
+  }
+}
