@@ -156,6 +156,17 @@ mentioned at all, return an empty list.
 Return {{"items": [{{"name": "...", {EVIDENCE_SHAPE}}}]}}"""),
 }
 
+MISSED_MEDS_PROMPT = f"""These medications were already found in the note:
+FOUND_LIST
+
+Read the WHOLE note again, every page and every section (including glucose or
+insulin management, sedation and delirium plans, nutrition, prophylaxis, and
+checklists). List ONLY medications that are mentioned in the note but are
+MISSING from the list above. Use the same status rules: active, given_once,
+held, discontinued, considered, planned. If nothing is missing, return an empty list.
+
+Return {{"items": [{{"name": "...", "dose": "..." or null, "status": "...", {EVIDENCE_SHAPE}}}]}}"""
+
 PATIENT_PROMPT = f"""Give the patient's age in years and sex, as stated in the note.
 Return {{"age": <number or null>, "sex": "..." or null, {EVIDENCE_SHAPE} or null}}"""
 
@@ -291,6 +302,26 @@ def extract_section(name, note_text, pages):
     return items, skipped
 
 
+def find_missed_meds(meds, note_text, pages):
+    """Second pass: show the model what it already found and ask only for what's missing.
+    Anything already listed under the same name is dropped."""
+    found = "\n".join(f"- {m['name']} ({m['status']})" for m in meds) or "(none)"
+    raw = ask_json(MISSED_MEDS_PROMPT.replace("FOUND_LIST", found), note_text)
+    known = {m["name"].lower() for m in meds}
+    added, skipped = [], 0
+    for entry in raw.get("items", []):
+        try:
+            med = Medication.model_validate(entry)
+        except ValidationError:
+            skipped += 1
+            continue
+        if med.name.lower() in known:
+            continue
+        verify_evidence(med.evidence, pages)
+        added.append(med.model_dump())
+        known.add(med.name.lower())
+    return added, skipped
+
 def extract_patient(note_text, pages):
     raw = ask_json(PATIENT_PROMPT, note_text)
     try:
@@ -323,6 +354,12 @@ def build_snapshot(filepath):
     have = {(m["name"].lower(), m["status"]) for m in snapshot["medications"]}
     snapshot["medications"] += [m for m in changes if (m["name"].lower(), m["status"]) not in have]
 
+    print("  Second pass for missed medications...", flush=True)
+    missed, skipped = find_missed_meds(snapshot["medications"], note_text, pages)
+    snapshot["medications"] += missed
+    skipped_total += skipped
+    print(f"    {len(missed)} added")
+    
     all_evidence = [i["evidence"] for name in SECTIONS if name in snapshot for i in snapshot[name]]
     snapshot["quality"] = {
         "items": len(all_evidence),
