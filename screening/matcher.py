@@ -104,6 +104,10 @@ UNKNOWN for this patient, using ONLY the clinical note.
 - UNKNOWN: the note does not document enough to decide. When in doubt, choose
   UNKNOWN. Never guess, and never assume what is "likely" for this kind of patient.
 
+Words like "chronic", "home", "long-term", "history of", and "pre-existing" refer to
+the patient's condition BEFORE this hospital stay. A current, acute problem treated
+in the hospital does not make a criterion about a chronic or home condition true.
+
 For TRUE or FALSE, give the page number and an EXACT quote copied word for word
 from the note (3 to 25 words) that proves it.
 
@@ -113,7 +117,31 @@ Return JSON: {{"decision": "TRUE" or "FALSE" or "UNKNOWN", "page": <number or nu
 "quote": "<exact words>" or null, "reason": "<one short sentence>"}}"""
 
 
-def check_criterion(criterion, note_text, pages):
+TIME_WINDOW_RE = re.compile(
+    r"\bwithin\b[^.;]*?\d+\s*(?:h|hrs?|hours?|days?|weeks?|months?|years?)\b"
+    r"|\b(?:last|past|previous)\s+\d+\s*(?:h|hrs?|hours?|days?|weeks?|months?|years?)\b",
+    re.I)
+PREGNANCY_RE = re.compile(r"pregnan|breast\s*-?feed|lactat", re.I)
+
+
+def code_rule(criterion, patient):
+    """Deterministic rules that run before any model call. Returns a result or None."""
+    text = criterion["text"]
+    if PREGNANCY_RE.search(text) and (patient.sex or "").strip().lower().startswith("m"):
+        return {**criterion, "decision": "FALSE", "page": None, "quote": None, "verified": True,
+                "reason": "Patient is male (from the verified patient info).", "checked_by": "code"}
+    if TIME_WINDOW_RE.search(text):
+        return {**criterion, "decision": "UNKNOWN", "page": None, "quote": None, "verified": False,
+                "reason": "Has a time window; a note can't confirm timing at screening. Check the chart.",
+                "checked_by": "code"}
+    return None
+
+
+def check_criterion(criterion, note_text, pages, patient=None):
+    if patient is not None:
+        rule_result = code_rule(criterion, patient)
+        if rule_result:
+            return rule_result
     parsed = parse_criterion(criterion["text"])
     if parsed and parsed.kind == "not_checkable":
         return {**criterion, "decision": "UNKNOWN", "page": None, "quote": None, "verified": False,
@@ -169,8 +197,11 @@ def screen_trial(trial, patient, note_text, pages):
          "reason": sex_reason, "page": None, "quote": None, "verified": sex_decision != "UNKNOWN",
          "checked_by": "code"},
     ]
-    for criterion in split_criteria(trial.get("eligibility_text", "")):
-        results.append(check_criterion(criterion, note_text, pages))
+    criteria = split_criteria(trial.get("eligibility_text", ""))
+    for i, criterion in enumerate(criteria, 1):
+        print(f"    {trial['nct_id']} criterion {i}/{len(criteria)}", end="\r", flush=True)
+        results.append(check_criterion(criterion, note_text, pages, patient))
+    print()
 
     blockers = sum(is_blocker(c) for c in results)
     unknown = sum(c["decision"] == "UNKNOWN" for c in results)
@@ -193,7 +224,10 @@ def screen_patient(pdf_path, trials):
     pages = load_pages(pdf_path)
     note_text = note_with_page_markers(pages)
     patient = extract_patient(note_text, pages)
-    screened = [screen_trial(t, patient, note_text, pages) for t in trials]
+    screened = []
+    for n, t in enumerate(trials, 1):
+        print(f"  Screening trial {n}/{len(trials)}: {t['nct_id']}", flush=True)
+        screened.append(screen_trial(t, patient, note_text, pages))
     screened.sort(key=lambda r: (r["blockers"] > 0, r["unknown"], -r["cleared"]))
     return {"source": str(pdf_path), "patient": patient.model_dump(), "trials": screened}
 
@@ -234,11 +268,16 @@ if __name__ == "__main__":
     parser.add_argument("--trials", required=True, help="name of a saved trial set in evals/trials/")
     parser.add_argument("--pdf", default=str(Path(DATA_DIR) / DEFAULT_FILENAME))
     parser.add_argument("--limit", type=int, default=5, help="how many trials to screen")
+    parser.add_argument("--only", nargs="+", help="screen only these NCT IDs")
     parser.add_argument("--make-key", action="store_true",
                         help="write a labeling file instead of screening")
     args = parser.parse_args()
 
-    trial_set = load_trials(args.trials)[: args.limit]
+    trial_set = load_trials(args.trials)
+    if args.only:
+        trial_set = [t for t in trial_set if t["nct_id"] in args.only]
+    else:
+        trial_set = trial_set[: args.limit]
     if args.make_key:
         out, n = make_key(trial_set, Path("evals") / f"criteria_key_{args.trials}.json")
         print(f"Wrote {n} criteria to {out}. Fill in each label with TRUE, FALSE, or UNKNOWN.")

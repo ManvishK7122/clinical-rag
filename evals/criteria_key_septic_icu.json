@@ -1,0 +1,1087 @@
+[
+  {
+    "nct_id": "NCT07664358",
+    "type": "inclusion",
+    "text": "Patients \u2265 18 years admitted to the ICU with traumatic Brain Injury",
+    "label": "",
+    "notes": ""
+  },
+  {
+    "nct_id": "NCT07664358",
+    "type": "inclusion",
+    "text": "Admission to the ICU within 24 hours of injury.",
+    "label": "",
+    "notes": ""
+  },
+  {
+    "nct_id": "NCT07664358",
+    "type": "inclusion",
+    "text": "Patients will be expected to remain under hospital care for follow-up",
+    "label": "",
+    "notes": ""
+  },
+  {
+    "nct_id": "NCT07664358",
+    "type": "inclusion",
+    "text": "Availability of fibrinogen and albumin measurements within the first 24 hours of ICU admission.",
+    "label": "",
+    "notes": ""
+  },
+  {
+    "nct_id": "NCT07664358",
+    "type": "inclusion",
+    "text": "Informed consent will be obtained from a legally authorized representative.",
+    "label": "",
+    "notes": ""
+  },
+  {
+    "nct_id": "NCT07664358",
+    "type": "exclusion",
+    "text": "Preexisting advanced chronic liver disease, nephrotic syndrome, or protein-losing enteropathy.",
+    "label": "",
+    "notes": ""
+  },
+  {
+    "nct_id": "NCT07664358",
+    "type": "exclusion",
+    "text": "Pre-existing ARDS on admission.",
+    "label": "",
+    "notes": ""
+  },
+  {
+    "nct_id": "NCT07664358",
+    "type": "exclusion",
+    "text": "Recipient of albumin, fibrinogen concentrate, or cryoprecipitate before admission sampling.",
+    "label": "",
+    "notes": ""
+  },
+  {
+    "nct_id": "NCT07664358",
+    "type": "exclusion",
+    "text": "Use of anticoagulant or fibrinolytic therapy before admission.",
+    "label": "",
+    "notes": ""
+  },
+  {
+    "nct_id": "NCT07664358",
+    "type": "exclusion",
+    "text": "Active malignancy or severe systemic infection at admission.",
+    "label": "",
+    "notes": ""
+  },
+  {
+    "nct_id": "NCT07664358",
+    "type": "exclusion",
+    "text": "Direct sever lung injury",
+    "label": "",
+    "notes": ""
+  },
+  {
+    "nct_id": "NCT07664358",
+    "type": "exclusion",
+    "text": "Pregnancy",
+    "label": "",
+    "notes": ""
+  },
+  {
+    "nct_id": "NCT07664358",
+    "type": "exclusion",
+    "text": "Refusal of consent",
+    "label": "",
+    "notes": ""
+  },
+  {
+    "nct_id": "NCT07569588",
+    "type": "inclusion",
+    "text": "Observational study workstream",
+    "label": "",
+    "notes": ""
+  },
+  {
+    "nct_id": "NCT07569588",
+    "type": "inclusion",
+    "text": "Age 18-85 years",
+    "label": "",
+    "notes": ""
+  },
+  {
+    "nct_id": "NCT07569588",
+    "type": "inclusion",
+    "text": "AKI stage 2 or 3 during hospital admission OR AKI stage 1 of at least 7 days duration during hospital admission",
+    "label": "",
+    "notes": ""
+  },
+  {
+    "nct_id": "NCT07569588",
+    "type": "inclusion",
+    "text": "60-90 days after peak creatinine Qualitative interview workstream",
+    "label": "",
+    "notes": ""
+  },
+  {
+    "nct_id": "NCT07569588",
+    "type": "inclusion",
+    "text": "Age 18-85 years",
+    "label": "",
+    "notes": ""
+  },
+  {
+    "nct_id": "NCT07569588",
+    "type": "inclusion",
+    "text": "AKI during hospital admission",
+    "label": "",
+    "notes": ""
+  },
+  {
+    "nct_id": "NCT07569588",
+    "type": "inclusion",
+    "text": "60-90 days after peak creatinine Participatory workshop workstream",
+    "label": "",
+    "notes": ""
+  },
+  {
+    "nct_id": "NCT07569588",
+    "type": "inclusion",
+    "text": "Age 18-85 years",
+    "label": "",
+    "notes": ""
+  },
+  {
+    "nct_id": "NCT07569588",
+    "type": "inclusion",
+    "text": "Relevant experience (as assessed by the investigator) which could include personal experience of an episode of hospitalised AKI as a patient of carer, experience of managing AKI or related problems in a professional capacity or knowledge of a particular community.",
+    "label": "",
+    "notes": ""
+  },
+  {
+    "nct_id": "NCT07569588",
+    "type": "exclusion",
+    "text": "Observational study workstream",
+    "label": "",
+    "notes": ""
+  },
+  {
+    "nct_id": "NCT07569588",
+    "type": "exclusion",
+    "text": "Inability to give informed consent",
+    "label": "",
+    "notes": ""
+  },
+  {
+    "nct_id": "NCT07569588",
+    "type": "exclusion",
+    "text": "No baseline creatinine available in previous 12 months",
+    "label": "",
+    "notes": ""
+  },
+  {
+    "nct_id": "NCT07569588",
+    "type": "exclusion",
+    "text": "Pregnancy or breastfeeding",
+    "label": "",
+    "notes": ""
+  },
+  {
+    "nct_id": "NCT07569588",
+    "type": "exclusion",
+    "text": "Current treatment with dialysis",
+    "label": "",
+    "notes": ""
+  },
+  {
+    "nct_id": "NCT07569588",
+    "type": "exclusion",
+    "text": "Renal transplant",
+    "label": "",
+    "notes": ""
+  },
+  {
+    "nct_id": "NCT07569588",
+    "type": "exclusion",
+    "text": "Pacemaker in situ",
+    "label": "",
+    "notes": ""
+  },
+  {
+    "nct_id": "NCT07569588",
+    "type": "exclusion",
+    "text": "Previous amputation",
+    "label": "",
+    "notes": ""
+  },
+  {
+    "nct_id": "NCT07569588",
+    "type": "exclusion",
+    "text": "Allergy to Omnipaque contrast agent (WP1 only)",
+    "label": "",
+    "notes": ""
+  },
+  {
+    "nct_id": "NCT07569588",
+    "type": "exclusion",
+    "text": "Manifest thyrotoxicosis (WP1 only)",
+    "label": "",
+    "notes": ""
+  },
+  {
+    "nct_id": "NCT07569588",
+    "type": "exclusion",
+    "text": "Ascites or significant (grade 3 to 4) peripheral oedema, defined as \u22656 mm pit, lasting for \\>1 minute after 5-second compression over tibia or medial malleolus (WP1 only) Qualitative interview workstream",
+    "label": "",
+    "notes": ""
+  },
+  {
+    "nct_id": "NCT07569588",
+    "type": "exclusion",
+    "text": "Inability to give informed consent",
+    "label": "",
+    "notes": ""
+  },
+  {
+    "nct_id": "NCT07569588",
+    "type": "exclusion",
+    "text": "No baseline creatinine available in previous 12 months",
+    "label": "",
+    "notes": ""
+  },
+  {
+    "nct_id": "NCT07569588",
+    "type": "exclusion",
+    "text": "Current treatment with dialysis",
+    "label": "",
+    "notes": ""
+  },
+  {
+    "nct_id": "NCT07569588",
+    "type": "exclusion",
+    "text": "Renal transplant",
+    "label": "",
+    "notes": ""
+  },
+  {
+    "nct_id": "NCT07569588",
+    "type": "exclusion",
+    "text": "Receiving palliative care Participatory workshop workstream",
+    "label": "",
+    "notes": ""
+  },
+  {
+    "nct_id": "NCT07569588",
+    "type": "exclusion",
+    "text": "Inability to give informed consent",
+    "label": "",
+    "notes": ""
+  },
+  {
+    "nct_id": "NCT07569588",
+    "type": "exclusion",
+    "text": "Inability to communicate in English (the qualitative workshops will be held in English)",
+    "label": "",
+    "notes": ""
+  },
+  {
+    "nct_id": "NCT06500156",
+    "type": "inclusion",
+    "text": "\\- Septic shock patients within the first 24 hours of ICU admission, and selected by the attending physician for performing a fluid challenge (FC) due to suspected tissue hypoperfusion (elevated lactate and/or ScvO2 \\< 70%).",
+    "label": "",
+    "notes": ""
+  },
+  {
+    "nct_id": "NCT06500156",
+    "type": "exclusion",
+    "text": "Age under 18 years old",
+    "label": "",
+    "notes": ""
+  },
+  {
+    "nct_id": "NCT06500156",
+    "type": "exclusion",
+    "text": "Uncontrolled hemodynamic instability, defined as the need for significant changes in vasopressor support (\\> 10% from baseline dose) within the 15-minute period prior to, and/or during the administration of fluids.",
+    "label": "",
+    "notes": ""
+  },
+  {
+    "nct_id": "NCT06500156",
+    "type": "exclusion",
+    "text": "Patients receiving continuous renal replacement therapies, since the CO values obtained from the thermodilution techniques might be potentially affected.",
+    "label": "",
+    "notes": ""
+  },
+  {
+    "nct_id": "NCT06357780",
+    "type": "inclusion",
+    "text": "Adult patients older than 18 years of age",
+    "label": "",
+    "notes": ""
+  },
+  {
+    "nct_id": "NCT06357780",
+    "type": "inclusion",
+    "text": "Hospitalized at the ICU or emergency department with the intention of treatment with Noninvasive ventilation at least for the upcoming 2 hours with spontaneous breathing activity",
+    "label": "",
+    "notes": ""
+  },
+  {
+    "nct_id": "NCT06357780",
+    "type": "inclusion",
+    "text": "Written informed consent signed and dated by the patient or one relative in case that the patient is unable to consent, after full explanation of the study by the investigator and prior to study participation",
+    "label": "",
+    "notes": ""
+  },
+  {
+    "nct_id": "NCT06357780",
+    "type": "exclusion",
+    "text": "Formalized ethical decision to withhold or withdraw life support",
+    "label": "",
+    "notes": ""
+  },
+  {
+    "nct_id": "NCT06357780",
+    "type": "exclusion",
+    "text": "Patient included in another interventional research study under consent",
+    "label": "",
+    "notes": ""
+  },
+  {
+    "nct_id": "NCT06357780",
+    "type": "exclusion",
+    "text": "Patient already enrolled in the present study in a previous episode of respiratory failure",
+    "label": "",
+    "notes": ""
+  },
+  {
+    "nct_id": "NCT06357780",
+    "type": "exclusion",
+    "text": "Pregnant woman",
+    "label": "",
+    "notes": ""
+  },
+  {
+    "nct_id": "NCT06357780",
+    "type": "exclusion",
+    "text": "Patients deemed at high risk for the need of transportation from an intensive care unit or emergency department to another ward, diagnostic unit or any other hospital",
+    "label": "",
+    "notes": ""
+  },
+  {
+    "nct_id": "NCT06357780",
+    "type": "exclusion",
+    "text": "Hemodynamic instability defined as a need of continuous infusion of epinephrine or norepinephrine \\> 1 mg/h",
+    "label": "",
+    "notes": ""
+  },
+  {
+    "nct_id": "NCT06357780",
+    "type": "exclusion",
+    "text": "Not being able to obtain reference waveforms due to technical or medical problems",
+    "label": "",
+    "notes": ""
+  },
+  {
+    "nct_id": "NCT06357780",
+    "type": "exclusion",
+    "text": "Vulnerable population",
+    "label": "",
+    "notes": ""
+  },
+  {
+    "nct_id": "NCT06357780",
+    "type": "exclusion",
+    "text": "Increase or decrease of ventilatory support either in pressures, fraction of inspired oxygen or mode of ventilation during study period",
+    "label": "",
+    "notes": ""
+  },
+  {
+    "nct_id": "NCT06849570",
+    "type": "inclusion",
+    "text": "Invasive mechanical ventilation within 96 hours of ICU admission and within 72 hours of tracheal intubation for first randomization and then within 72 hours of the first randomization for the second randomization",
+    "label": "UNKNOWN",
+    "notes": "Timing window: ICU admit 05/03, note 05/06; depends on screening time"
+  },
+  {
+    "nct_id": "NCT06849570",
+    "type": "inclusion",
+    "text": "Patients meeting the Berlin ARDS definition criteria with hypoxemia characterized as",
+    "label": "TRUE",
+    "notes": "Bilateral opacities on CXR, P/F 117 on PEEP 14 = moderate ARDS"
+  },
+  {
+    "nct_id": "NCT06849570",
+    "type": "inclusion",
+    "text": "for first randomization: PaO2/FiO2 \u2264150 mmHg on a PEEP \u22655 cmH2O with FiO2\u22650.6 while VT is 6 ml/kg Predicted Body Weight (PBW) and adequate sedation level to adjust mechanical ventilation settings",
+    "label": "TRUE",
+    "notes": "P/F 117, PEEP 14, FiO2 0.65, TV 6 mL/kg IBW, RASS -1 on midazolam+fentanyl"
+  },
+  {
+    "nct_id": "NCT06849570",
+    "type": "inclusion",
+    "text": "for second randomization: PaO2/FiO2 \u2264150 mmHg on optimized ventilatory settings according to the first randomization, confirmed by two Arterial blood gas (ABG) analyses separated by an interval time of 4 hours and observed within 72 hours of the first randomization",
+    "label": "UNKNOWN",
+    "notes": "Study procedure after first randomization; not in note"
+  },
+  {
+    "nct_id": "NCT06849570",
+    "type": "inclusion",
+    "text": "Informed consent signed:",
+    "label": "UNKNOWN",
+    "notes": "Consent not documented"
+  },
+  {
+    "nct_id": "NCT06849570",
+    "type": "inclusion",
+    "text": "by the patient",
+    "label": "UNKNOWN",
+    "notes": "Consent not documented"
+  },
+  {
+    "nct_id": "NCT06849570",
+    "type": "inclusion",
+    "text": "Or informed consent signed by a family members/trustworthy person if his condition does not allow him to express his consent by written as per L. 1111-6",
+    "label": "UNKNOWN",
+    "notes": "Consent not documented"
+  },
+  {
+    "nct_id": "NCT06849570",
+    "type": "inclusion",
+    "text": "Or in a situation urgently and in the absence of family members/trustworthy person, the patient can be enrolled. The consent to participate to the research will be requested as soon as the condition of the patient will allow him to consent.",
+    "label": "UNKNOWN",
+    "notes": "Consent/enrollment process not documented"
+  },
+  {
+    "nct_id": "NCT06849570",
+    "type": "inclusion",
+    "text": "Health insurance coverage",
+    "label": "UNKNOWN",
+    "notes": "Insurance not documented"
+  },
+  {
+    "nct_id": "NCT06849570",
+    "type": "exclusion",
+    "text": "Age \\< 18 years",
+    "label": "FALSE",
+    "notes": "Age 53"
+  },
+  {
+    "nct_id": "NCT06849570",
+    "type": "exclusion",
+    "text": "Known pregnancy or breastfeeding",
+    "label": "FALSE",
+    "notes": "53-year-old male"
+  },
+  {
+    "nct_id": "NCT06849570",
+    "type": "exclusion",
+    "text": "Participation in another interventional studies as long as these studies do not interfere with the primary endpoint and the secondary safety objectives of PEPER, or being in the exclusion period at the end of a previous study.",
+    "label": "UNKNOWN",
+    "notes": "Other study participation not documented"
+  },
+  {
+    "nct_id": "NCT06849570",
+    "type": "exclusion",
+    "text": "Intracranial pressure \\> 30 mm Hg or cerebral perfusion pressure \\< 60 mmHg",
+    "label": "UNKNOWN",
+    "notes": "ICP/CPP not documented"
+  },
+  {
+    "nct_id": "NCT06849570",
+    "type": "exclusion",
+    "text": "Severe chronic respiratory disease requiring long-term O2 therapy or home mechanical ventilation (except Continuous positive arway pressure (CPAP)/ Bilevel positive airway pressure (BIPAP) used for sleep apnea syndrome)",
+    "label": "UNKNOWN",
+    "notes": "Past respiratory history not documented"
+  },
+  {
+    "nct_id": "NCT06849570",
+    "type": "exclusion",
+    "text": "Chronic interstitial lung disease",
+    "label": "UNKNOWN",
+    "notes": "Past lung history not documented"
+  },
+  {
+    "nct_id": "NCT06849570",
+    "type": "exclusion",
+    "text": "Continuous neuromuscular blockade infusion at enrolment",
+    "label": "FALSE",
+    "notes": "No paralytic in med list; follows simple commands (RASS -1)"
+  },
+  {
+    "nct_id": "NCT06849570",
+    "type": "exclusion",
+    "text": "Previous hypersensitivity or anaphylactic reaction to any NMBA",
+    "label": "UNKNOWN",
+    "notes": "Allergies not documented in note"
+  },
+  {
+    "nct_id": "NCT06849570",
+    "type": "exclusion",
+    "text": "Neuromuscular disease that may potentiate neuromuscular blockade or impair spontaneous ventilation: amyotrophic lateral sclerosis, Guillain-Barr\u00e9 syndrome, myasthenia gravis, upper spinal injury at level C5 or above",
+    "label": "UNKNOWN",
+    "notes": "Neuromuscular history not documented"
+  },
+  {
+    "nct_id": "NCT06849570",
+    "type": "exclusion",
+    "text": "Patients on ECMO or any technique of extracorporeal CO2 removal",
+    "label": "FALSE",
+    "notes": "Device list (ETT, CVC, art line, Foley, CRRT cath, NGT) has no ECMO"
+  },
+  {
+    "nct_id": "NCT06849570",
+    "type": "exclusion",
+    "text": "Sickle cell disease",
+    "label": "UNKNOWN",
+    "notes": "Not documented"
+  },
+  {
+    "nct_id": "NCT06849570",
+    "type": "exclusion",
+    "text": "Actual body weight \\>1 kg/cm of height",
+    "label": "FALSE",
+    "notes": "94 kg; IBW 74.6 kg implies height ~179 cm, so under 1 kg/cm"
+  },
+  {
+    "nct_id": "NCT06849570",
+    "type": "exclusion",
+    "text": "Severe chronic liver disease defined as a Child-Pugh score of 12-15",
+    "label": "UNKNOWN",
+    "notes": "Acute shock liver noted; chronic liver disease/Child-Pugh not documented"
+  },
+  {
+    "nct_id": "NCT06849570",
+    "type": "exclusion",
+    "text": "Pneumothorax at randomization",
+    "label": "FALSE",
+    "notes": "CXR 05/06: no new pneumothorax"
+  },
+  {
+    "nct_id": "NCT06849570",
+    "type": "exclusion",
+    "text": "Expected duration of mechanical ventilation \\<48 hours",
+    "label": "FALSE",
+    "notes": "Ventilated since ~05/03; SBT criteria not met, FiO2/PEEP too high"
+  },
+  {
+    "nct_id": "NCT06849570",
+    "type": "exclusion",
+    "text": "Simplified acute physiology score SAPS II score \\>75 at the time of enrolment or suffering from a disease with an estimated survival time of less than two months",
+    "label": "UNKNOWN",
+    "notes": "SAPS II not documented"
+  },
+  {
+    "nct_id": "NCT06849570",
+    "type": "exclusion",
+    "text": "Decision to withhold life-sustaining treatment",
+    "label": "FALSE",
+    "notes": "Full code; palliative care not engaged"
+  },
+  {
+    "nct_id": "NCT06849570",
+    "type": "exclusion",
+    "text": "Patients deprived of freedom or under legal authority",
+    "label": "UNKNOWN",
+    "notes": "Not documented"
+  },
+  {
+    "nct_id": "NCT06849570",
+    "type": "exclusion",
+    "text": "Unstable spine fracture",
+    "label": "UNKNOWN",
+    "notes": "Not documented"
+  },
+  {
+    "nct_id": "NCT07383103",
+    "type": "inclusion",
+    "text": "(1)18\u2264Age\u226490; (2)Diagnosis of septic shock within 12 h.",
+    "label": "FALSE",
+    "notes": "Age 53 ok, but septic shock since ~05/03 and note is 05/06, so not within 12 h"
+  },
+  {
+    "nct_id": "NCT07383103",
+    "type": "exclusion",
+    "text": "Patients meeting any of the following conditions will be excluded:",
+    "label": "",
+    "notes": ""
+  },
+  {
+    "nct_id": "NCT07383103",
+    "type": "exclusion",
+    "text": "Systemic corticosteroid therapy within the last 3 months before septic shock;",
+    "label": "UNKNOWN",
+    "notes": "Steroid history in last 3 months not documented"
+  },
+  {
+    "nct_id": "NCT07383103",
+    "type": "exclusion",
+    "text": "High-dose steroid therapy;",
+    "label": "FALSE",
+    "notes": "No steroids in current medication list; cortisol test not performed"
+  },
+  {
+    "nct_id": "NCT07383103",
+    "type": "exclusion",
+    "text": "Immunosuppression;",
+    "label": "UNKNOWN",
+    "notes": "Immune status not documented"
+  },
+  {
+    "nct_id": "NCT07383103",
+    "type": "exclusion",
+    "text": "Pregnant;",
+    "label": "FALSE",
+    "notes": "53-year-old male"
+  },
+  {
+    "nct_id": "NCT07383103",
+    "type": "exclusion",
+    "text": "Known allergy to hydrocortisone or fludrocortisone;",
+    "label": "UNKNOWN",
+    "notes": "Allergies not documented in note"
+  },
+  {
+    "nct_id": "NCT07383103",
+    "type": "exclusion",
+    "text": "Presence of gastrointestinal bleeding, perforation, or other conditions requiring fasting;",
+    "label": "FALSE",
+    "notes": "Tube feeds running at 45 mL/hr; no GI bleed noted"
+  },
+  {
+    "nct_id": "NCT07383103",
+    "type": "exclusion",
+    "text": "Anticipated death from a preexisting disease within 90 days after randomization (as determined by the enrolling physician);",
+    "label": "UNKNOWN",
+    "notes": "Physician judgment"
+  },
+  {
+    "nct_id": "NCT07383103",
+    "type": "exclusion",
+    "text": "Refusal of the attending staff or patient family;",
+    "label": "UNKNOWN",
+    "notes": "Not documented"
+  },
+  {
+    "nct_id": "NCT07383103",
+    "type": "exclusion",
+    "text": "Current participation in another clinical trial.",
+    "label": "UNKNOWN",
+    "notes": "Not documented"
+  },
+  {
+    "nct_id": "NCT06615102",
+    "type": "inclusion",
+    "text": "Cardiac surgery using cardiopulmonary bypass including coronary artery bypass grafting (CABG) surgery, valve surgery, or combined CABG/valve surgery",
+    "label": "",
+    "notes": ""
+  },
+  {
+    "nct_id": "NCT06615102",
+    "type": "inclusion",
+    "text": "Elevated risk of AKI as predicted by a score \u2265 1.5 on the following scale:",
+    "label": "",
+    "notes": ""
+  },
+  {
+    "nct_id": "NCT06615102",
+    "type": "inclusion",
+    "text": "hemoglobin \\< 130g/l = 2",
+    "label": "",
+    "notes": ""
+  },
+  {
+    "nct_id": "NCT06615102",
+    "type": "inclusion",
+    "text": "creatinine \\> 1.1 mg/dl = 2",
+    "label": "",
+    "notes": ""
+  },
+  {
+    "nct_id": "NCT06615102",
+    "type": "inclusion",
+    "text": "age \\> 70 years =1.5",
+    "label": "",
+    "notes": ""
+  },
+  {
+    "nct_id": "NCT06615102",
+    "type": "inclusion",
+    "text": "New York Heart Association Classification (NYHA) 4 =1.5",
+    "label": "",
+    "notes": ""
+  },
+  {
+    "nct_id": "NCT06615102",
+    "type": "inclusion",
+    "text": "Body Mass Index (BMI) \\> 30 =1.5",
+    "label": "",
+    "notes": ""
+  },
+  {
+    "nct_id": "NCT06615102",
+    "type": "inclusion",
+    "text": "Adult \u2265 18 years",
+    "label": "",
+    "notes": ""
+  },
+  {
+    "nct_id": "NCT06615102",
+    "type": "inclusion",
+    "text": "Written informed consent",
+    "label": "",
+    "notes": ""
+  },
+  {
+    "nct_id": "NCT06615102",
+    "type": "exclusion",
+    "text": "Major aortic surgery (aortic arch replacement), transplant surgery, pulmonary thrombendarterectomy, ventricular assist device placement",
+    "label": "",
+    "notes": ""
+  },
+  {
+    "nct_id": "NCT06615102",
+    "type": "exclusion",
+    "text": "Already receiving inotropic/vasopressor support before surgery",
+    "label": "",
+    "notes": ""
+  },
+  {
+    "nct_id": "NCT06615102",
+    "type": "exclusion",
+    "text": "Dialysis dependent",
+    "label": "",
+    "notes": ""
+  },
+  {
+    "nct_id": "NCT06615102",
+    "type": "exclusion",
+    "text": "Pre-existing AKI within the last 30 days",
+    "label": "",
+    "notes": ""
+  },
+  {
+    "nct_id": "NCT06615102",
+    "type": "exclusion",
+    "text": "Pre-existing chronic kidney injury with an eGFR\\<20 ml/min/1.73m2",
+    "label": "",
+    "notes": ""
+  },
+  {
+    "nct_id": "NCT06615102",
+    "type": "exclusion",
+    "text": "Pre-existing significant hypertension (persistent SBP \\> 180mmHg)",
+    "label": "",
+    "notes": ""
+  },
+  {
+    "nct_id": "NCT06615102",
+    "type": "exclusion",
+    "text": "Significant pulmonary hypertension (ePSAP \\> 70mmHg, mPAP \\> 40mmHg) with right ventricular systolic dysfunction (graded more severe than mild)",
+    "label": "",
+    "notes": ""
+  },
+  {
+    "nct_id": "NCT06615102",
+    "type": "exclusion",
+    "text": "Hypersensitivity to the active substance or to any of the excipients",
+    "label": "",
+    "notes": ""
+  },
+  {
+    "nct_id": "NCT06615102",
+    "type": "exclusion",
+    "text": "Pregnancy (a negative pregnancy test for women of childbearing age) or breastfeeding women",
+    "label": "",
+    "notes": ""
+  },
+  {
+    "nct_id": "NCT06615102",
+    "type": "exclusion",
+    "text": "Persons with any kind of dependency on the investigator or employed by the sponsor/investigator",
+    "label": "",
+    "notes": ""
+  },
+  {
+    "nct_id": "NCT06615102",
+    "type": "exclusion",
+    "text": "Participation in another interventional trial within the last three months that investigates kidney function",
+    "label": "",
+    "notes": ""
+  },
+  {
+    "nct_id": "NCT04068012",
+    "type": "inclusion",
+    "text": "Children \\> 1 month of age and \\>44 weeks gestation and \u2264 18 years of age AND",
+    "label": "",
+    "notes": ""
+  },
+  {
+    "nct_id": "NCT04068012",
+    "type": "inclusion",
+    "text": "Supported on mechanical ventilation with pulmonary parenchymal disease (i.e. Pediatric Acute Respiratory Distress Syndrome (PARDS)) with Oxygen Saturation Index (OSI) \u2265 5) or Oxygenation Index (OI) \u2265 4 AND",
+    "label": "",
+    "notes": ""
+  },
+  {
+    "nct_id": "NCT04068012",
+    "type": "inclusion",
+    "text": "Who are within 72 hours of initiation of invasive mechanical ventilation AND",
+    "label": "",
+    "notes": ""
+  },
+  {
+    "nct_id": "NCT04068012",
+    "type": "inclusion",
+    "text": "Who are anticipated to require \\>72 hours mechanical ventilation.",
+    "label": "",
+    "notes": ""
+  },
+  {
+    "nct_id": "NCT04068012",
+    "type": "exclusion",
+    "text": "Conditions on enrollment that preclude conventional methods of weaning (i.e., status asthmaticus, severe lower airway obstruction, bronchiolitis, critical airway, Extra Corporeal Life Support (ECLS), intubation for Upper Airway Obstruction, Do Not Resuscitate orders, severe chronic respiratory failure, spinal cord injury above lumbar region, cyanotic heart disease (unrepaired or palliated)) OR",
+    "label": "",
+    "notes": ""
+  },
+  {
+    "nct_id": "NCT04068012",
+    "type": "exclusion",
+    "text": "Conditions precluding the use of permissive hypercapnia or hypoxemia (i.e. intracranial hypertension, severe pulmonary hypertension)",
+    "label": "",
+    "notes": ""
+  },
+  {
+    "nct_id": "NCT04068012",
+    "type": "exclusion",
+    "text": "Primary Attending physician refuses to enroll the patient",
+    "label": "",
+    "notes": ""
+  },
+  {
+    "nct_id": "NCT07211529",
+    "type": "inclusion",
+    "text": "Male or female participants aged 18 years or older.",
+    "label": "",
+    "notes": ""
+  },
+  {
+    "nct_id": "NCT07211529",
+    "type": "inclusion",
+    "text": "Scheduled to undergo thoracic surgery via Video-Assisted Thoracoscopic Surgery (VATS) or Robotic-Assisted Thoracoscopic Surgery (RATS), including wedge resection, segmentectomy, lobectomy, or mediastinal surgery.",
+    "label": "",
+    "notes": ""
+  },
+  {
+    "nct_id": "NCT07211529",
+    "type": "inclusion",
+    "text": "Signed informed consent obtained prior to study participation. -",
+    "label": "",
+    "notes": ""
+  },
+  {
+    "nct_id": "NCT07211529",
+    "type": "exclusion",
+    "text": "Patients who refuse to provide informed consent.",
+    "label": "",
+    "notes": ""
+  },
+  {
+    "nct_id": "NCT07211529",
+    "type": "exclusion",
+    "text": "Anesthesiologists who have not received training in ultrasound-guided paravertebral block (PVB-US).",
+    "label": "",
+    "notes": ""
+  },
+  {
+    "nct_id": "NCT07211529",
+    "type": "exclusion",
+    "text": "History of ipsilateral thoracic surgery.",
+    "label": "",
+    "notes": ""
+  },
+  {
+    "nct_id": "NCT07211529",
+    "type": "exclusion",
+    "text": "Conversion to open thoracotomy during the procedure.",
+    "label": "",
+    "notes": ""
+  },
+  {
+    "nct_id": "NCT07211529",
+    "type": "exclusion",
+    "text": "Patients who did not complete the scheduled surgery due to disease progression or medical reasons.",
+    "label": "",
+    "notes": ""
+  },
+  {
+    "nct_id": "NCT07211529",
+    "type": "exclusion",
+    "text": "Patients who are lost to follow-up or refuse postoperative follow-up. -",
+    "label": "",
+    "notes": ""
+  },
+  {
+    "nct_id": "NCT03401398",
+    "type": "inclusion",
+    "text": "A child receiving treatment in a pediatric intensive care unit is eligible for recruitment into SHIPSS if she/he meets all of the following inclusion criteria:",
+    "label": "",
+    "notes": ""
+  },
+  {
+    "nct_id": "NCT03401398",
+    "type": "inclusion",
+    "text": "Age is at least 1 month (with corrected gestational age \u226542 weeks), but less than 17 years and 8 months of age",
+    "label": "",
+    "notes": ""
+  },
+  {
+    "nct_id": "NCT03401398",
+    "type": "inclusion",
+    "text": "A documented focus of infection or a strong suspicion of infection at PICU admission, or for patients who develop septic shock during PICU stay, at the onset of the septic shock event",
+    "label": "",
+    "notes": ""
+  },
+  {
+    "nct_id": "NCT03401398",
+    "type": "inclusion",
+    "text": "Surveillance cultures (e.g. blood, urine, cerebral spinal fluid, wound) and/or other microbial diagnostic tests have been obtained",
+    "label": "",
+    "notes": ""
+  },
+  {
+    "nct_id": "NCT03401398",
+    "type": "inclusion",
+    "text": "One or more antimicrobials have been prescribed",
+    "label": "",
+    "notes": ""
+  },
+  {
+    "nct_id": "NCT03401398",
+    "type": "inclusion",
+    "text": "Core temperature \\>38.5 C or \\<36.0 C or leukocytosis or leukopenia (as defined by the local laboratory) or a left-shifted leukocyte differential (\\>10% immature granulocyte forms) or a neutrophil count of \\<0.5 x 109 cells per litre documented at least once within the 24 hours preceding screening",
+    "label": "",
+    "notes": ""
+  },
+  {
+    "nct_id": "NCT03401398",
+    "type": "inclusion",
+    "text": "Treatment with a continuous infusion of vasoactive-inotropic agent(s) to maintain mean or systolic arterial blood pressure above the age-appropriate target set by the treating clinician",
+    "label": "",
+    "notes": ""
+  },
+  {
+    "nct_id": "NCT03401398",
+    "type": "inclusion",
+    "text": "Administration of two or more vasoactive-inotropic agents at any dose or epinephrine or norepinephrine infusion(s) alone at greater than or equal to 0.10 mcg/kg/min for \\>1 hour.",
+    "label": "",
+    "notes": ""
+  },
+  {
+    "nct_id": "NCT03401398",
+    "type": "exclusion",
+    "text": "A child receiving treatment in a pediatric intensive care unit for sepsis is ineligible for enrollment into SHIPSS if she/he meets any of the following exclusion criteria:",
+    "label": "",
+    "notes": ""
+  },
+  {
+    "nct_id": "NCT03401398",
+    "type": "exclusion",
+    "text": "All inclusion criteria have been present for \\> 12 hours",
+    "label": "",
+    "notes": ""
+  },
+  {
+    "nct_id": "NCT03401398",
+    "type": "exclusion",
+    "text": "Attending physician expects to prescribe systemic corticosteroids for an indication other than septic shock",
+    "label": "",
+    "notes": ""
+  },
+  {
+    "nct_id": "NCT03401398",
+    "type": "exclusion",
+    "text": "Patient has received any doses of systemic corticosteroids during treatment for sepsis",
+    "label": "",
+    "notes": ""
+  },
+  {
+    "nct_id": "NCT03401398",
+    "type": "exclusion",
+    "text": "Enrolled concurrently in a competing interventional clinical trial (formal assessment to be conducted by SHIPSS Core Committee for each potential competing trial)",
+    "label": "",
+    "notes": ""
+  },
+  {
+    "nct_id": "NCT03401398",
+    "type": "exclusion",
+    "text": "Etomidate or ketoconazole treatment within past 48 hours",
+    "label": "",
+    "notes": ""
+  },
+  {
+    "nct_id": "NCT03401398",
+    "type": "exclusion",
+    "text": "Patient in whom steroids are contraindicated at time of screening (e.g. treatment for systemic fungal infection, cerebral malaria, strongyloides)",
+    "label": "",
+    "notes": ""
+  },
+  {
+    "nct_id": "NCT03401398",
+    "type": "exclusion",
+    "text": "Known or suspected hypothalamic, pituitary or adrenal disease (including patient has received acute or chronic corticosteroid administration and the physician intends to provide corticosteroid for suspected adrenal suppression)",
+    "label": "",
+    "notes": ""
+  },
+  {
+    "nct_id": "NCT03401398",
+    "type": "exclusion",
+    "text": "Attending physician, PICU care team, or legally recognized guardians not committed to full treatment and resuscitation at the time of screening",
+    "label": "",
+    "notes": ""
+  },
+  {
+    "nct_id": "NCT03401398",
+    "type": "exclusion",
+    "text": "Patient documented to be pregnant",
+    "label": "",
+    "notes": ""
+  },
+  {
+    "nct_id": "NCT03401398",
+    "type": "exclusion",
+    "text": "Previous enrollment in the SHIPSS study",
+    "label": "",
+    "notes": ""
+  },
+  {
+    "nct_id": "NCT03401398",
+    "type": "exclusion",
+    "text": "Patient admitted directly to the PICU with a thermal burn who has been in the PICU for \\<72 hours prior to meeting SHIPSS inclusion criteria.",
+    "label": "",
+    "notes": ""
+  },
+  {
+    "nct_id": "NCT03401398",
+    "type": "exclusion",
+    "text": "(U.S. sites only) Patient in the custody of US protective services",
+    "label": "",
+    "notes": ""
+  },
+  {
+    "nct_id": "NCT03401398",
+    "type": "exclusion",
+    "text": "Patient being evaluated for brain death",
+    "label": "",
+    "notes": ""
+  },
+  {
+    "nct_id": "NCT03401398",
+    "type": "exclusion",
+    "text": "Vasoactive-inotropic agents prescribed solely for an indication other than septic shock",
+    "label": "",
+    "notes": ""
+  },
+  {
+    "nct_id": "NCT03401398",
+    "type": "exclusion",
+    "text": "Confirmed dengue fever",
+    "label": "",
+    "notes": ""
+  }
+]

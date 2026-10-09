@@ -1,0 +1,268 @@
+[
+  {
+    "index": 56,
+    "nct_id": "NCT06849570",
+    "text": "Invasive mechanical ventilation within 96 hours of ICU admission and within 72 hours of tracheal intubation for first randomization and then within 72 hours of the first randomization for the second randomization",
+    "label": "UNKNOWN",
+    "notes": "Timing window: ICU admit 05/03, note 05/06; depends on screening time"
+  },
+  {
+    "index": 57,
+    "nct_id": "NCT06849570",
+    "text": "Patients meeting the Berlin ARDS definition criteria with hypoxemia characterized as",
+    "label": "TRUE",
+    "notes": "Bilateral opacities on CXR, P/F 117 on PEEP 14 = moderate ARDS"
+  },
+  {
+    "index": 58,
+    "nct_id": "NCT06849570",
+    "text": "for first randomization: PaO2/FiO2 \u2264150 mmHg on a PEEP \u22655 cmH2O with FiO2\u22650.6 while VT is 6 ml/kg Predicted Body Weight (PBW) and adequate sedation level to adjust mechanical ventilation settings",
+    "label": "TRUE",
+    "notes": "P/F 117, PEEP 14, FiO2 0.65, TV 6 mL/kg IBW, RASS -1 on midazolam+fentanyl"
+  },
+  {
+    "index": 59,
+    "nct_id": "NCT06849570",
+    "text": "for second randomization: PaO2/FiO2 \u2264150 mmHg on optimized ventilatory settings according to the first randomization, confirmed by two Arterial blood gas (ABG) analyses separated by an interval time of 4 hours and observed within 72 hours of the first randomization",
+    "label": "UNKNOWN",
+    "notes": "Study procedure after first randomization; not in note"
+  },
+  {
+    "index": 60,
+    "nct_id": "NCT06849570",
+    "text": "Informed consent signed:",
+    "label": "UNKNOWN",
+    "notes": "Consent not documented"
+  },
+  {
+    "index": 61,
+    "nct_id": "NCT06849570",
+    "text": "by the patient",
+    "label": "UNKNOWN",
+    "notes": "Consent not documented"
+  },
+  {
+    "index": 62,
+    "nct_id": "NCT06849570",
+    "text": "Or informed consent signed by a family members/trustworthy person if his condition does not allow him to express his consent by written as per L. 1111-6",
+    "label": "UNKNOWN",
+    "notes": "Consent not documented"
+  },
+  {
+    "index": 63,
+    "nct_id": "NCT06849570",
+    "text": "Or in a situation urgently and in the absence of family members/trustworthy person, the patient can be enrolled. The consent to participate to the research will be requested as soon as the condition of the patient will allow him to consent.",
+    "label": "UNKNOWN",
+    "notes": "Consent/enrollment process not documented"
+  },
+  {
+    "index": 64,
+    "nct_id": "NCT06849570",
+    "text": "Health insurance coverage",
+    "label": "UNKNOWN",
+    "notes": "Insurance not documented"
+  },
+  {
+    "index": 65,
+    "nct_id": "NCT06849570",
+    "text": "Age \\< 18 years",
+    "label": "FALSE",
+    "notes": "Age 53"
+  },
+  {
+    "index": 66,
+    "nct_id": "NCT06849570",
+    "text": "Known pregnancy or breastfeeding",
+    "label": "FALSE",
+    "notes": "53-year-old male"
+  },
+  {
+    "index": 67,
+    "nct_id": "NCT06849570",
+    "text": "Participation in another interventional studies as long as these studies do not interfere with the primary endpoint and the secondary safety objectives of PEPER, or being in the exclusion period at the end of a previous study.",
+    "label": "UNKNOWN",
+    "notes": "Other study participation not documented"
+  },
+  {
+    "index": 68,
+    "nct_id": "NCT06849570",
+    "text": "Intracranial pressure \\> 30 mm Hg or cerebral perfusion pressure \\< 60 mmHg",
+    "label": "UNKNOWN",
+    "notes": "ICP/CPP not documented"
+  },
+  {
+    "index": 69,
+    "nct_id": "NCT06849570",
+    "text": "Severe chronic respiratory disease requiring long-term O2 therapy or home mechanical ventilation (except Continuous positive arway pressure (CPAP)/ Bilevel positive airway pressure (BIPAP) used for sleep apnea syndrome)",
+    "label": "UNKNOWN",
+    "notes": "Past respiratory history not documented"
+  },
+  {
+    "index": 70,
+    "nct_id": "NCT06849570",
+    "text": "Chronic interstitial lung disease",
+    "label": "UNKNOWN",
+    "notes": "Past lung history not documented"
+  },
+  {
+    "index": 71,
+    "nct_id": "NCT06849570",
+    "text": "Continuous neuromuscular blockade infusion at enrolment",
+    "label": "FALSE",
+    "notes": "No paralytic in med list; follows simple commands (RASS -1)"
+  },
+  {
+    "index": 72,
+    "nct_id": "NCT06849570",
+    "text": "Previous hypersensitivity or anaphylactic reaction to any NMBA",
+    "label": "UNKNOWN",
+    "notes": "Allergies not documented in note"
+  },
+  {
+    "index": 73,
+    "nct_id": "NCT06849570",
+    "text": "Neuromuscular disease that may potentiate neuromuscular blockade or impair spontaneous ventilation: amyotrophic lateral sclerosis, Guillain-Barr\u00e9 syndrome, myasthenia gravis, upper spinal injury at level C5 or above",
+    "label": "UNKNOWN",
+    "notes": "Neuromuscular history not documented"
+  },
+  {
+    "index": 74,
+    "nct_id": "NCT06849570",
+    "text": "Patients on ECMO or any technique of extracorporeal CO2 removal",
+    "label": "FALSE",
+    "notes": "Device list (ETT, CVC, art line, Foley, CRRT cath, NGT) has no ECMO"
+  },
+  {
+    "index": 75,
+    "nct_id": "NCT06849570",
+    "text": "Sickle cell disease",
+    "label": "UNKNOWN",
+    "notes": "Not documented"
+  },
+  {
+    "index": 76,
+    "nct_id": "NCT06849570",
+    "text": "Actual body weight \\>1 kg/cm of height",
+    "label": "FALSE",
+    "notes": "94 kg; IBW 74.6 kg implies height ~179 cm, so under 1 kg/cm"
+  },
+  {
+    "index": 77,
+    "nct_id": "NCT06849570",
+    "text": "Severe chronic liver disease defined as a Child-Pugh score of 12-15",
+    "label": "UNKNOWN",
+    "notes": "Acute shock liver noted; chronic liver disease/Child-Pugh not documented"
+  },
+  {
+    "index": 78,
+    "nct_id": "NCT06849570",
+    "text": "Pneumothorax at randomization",
+    "label": "FALSE",
+    "notes": "CXR 05/06: no new pneumothorax"
+  },
+  {
+    "index": 79,
+    "nct_id": "NCT06849570",
+    "text": "Expected duration of mechanical ventilation \\<48 hours",
+    "label": "FALSE",
+    "notes": "Ventilated since ~05/03; SBT criteria not met, FiO2/PEEP too high"
+  },
+  {
+    "index": 80,
+    "nct_id": "NCT06849570",
+    "text": "Simplified acute physiology score SAPS II score \\>75 at the time of enrolment or suffering from a disease with an estimated survival time of less than two months",
+    "label": "UNKNOWN",
+    "notes": "SAPS II not documented"
+  },
+  {
+    "index": 81,
+    "nct_id": "NCT06849570",
+    "text": "Decision to withhold life-sustaining treatment",
+    "label": "FALSE",
+    "notes": "Full code; palliative care not engaged"
+  },
+  {
+    "index": 82,
+    "nct_id": "NCT06849570",
+    "text": "Patients deprived of freedom or under legal authority",
+    "label": "UNKNOWN",
+    "notes": "Not documented"
+  },
+  {
+    "index": 83,
+    "nct_id": "NCT06849570",
+    "text": "Unstable spine fracture",
+    "label": "UNKNOWN",
+    "notes": "Not documented"
+  },
+  {
+    "index": 84,
+    "nct_id": "NCT07383103",
+    "text": "(1)18\u2264Age\u226490; (2)Diagnosis of septic shock within 12 h.",
+    "label": "FALSE",
+    "notes": "Age 53 ok, but septic shock since ~05/03 and note is 05/06, so not within 12 h"
+  },
+  {
+    "index": 86,
+    "nct_id": "NCT07383103",
+    "text": "Systemic corticosteroid therapy within the last 3 months before septic shock;",
+    "label": "UNKNOWN",
+    "notes": "Steroid history in last 3 months not documented"
+  },
+  {
+    "index": 87,
+    "nct_id": "NCT07383103",
+    "text": "High-dose steroid therapy;",
+    "label": "FALSE",
+    "notes": "No steroids in current medication list; cortisol test not performed"
+  },
+  {
+    "index": 88,
+    "nct_id": "NCT07383103",
+    "text": "Immunosuppression;",
+    "label": "UNKNOWN",
+    "notes": "Immune status not documented"
+  },
+  {
+    "index": 89,
+    "nct_id": "NCT07383103",
+    "text": "Pregnant;",
+    "label": "FALSE",
+    "notes": "53-year-old male"
+  },
+  {
+    "index": 90,
+    "nct_id": "NCT07383103",
+    "text": "Known allergy to hydrocortisone or fludrocortisone;",
+    "label": "UNKNOWN",
+    "notes": "Allergies not documented in note"
+  },
+  {
+    "index": 91,
+    "nct_id": "NCT07383103",
+    "text": "Presence of gastrointestinal bleeding, perforation, or other conditions requiring fasting;",
+    "label": "FALSE",
+    "notes": "Tube feeds running at 45 mL/hr; no GI bleed noted"
+  },
+  {
+    "index": 92,
+    "nct_id": "NCT07383103",
+    "text": "Anticipated death from a preexisting disease within 90 days after randomization (as determined by the enrolling physician);",
+    "label": "UNKNOWN",
+    "notes": "Physician judgment"
+  },
+  {
+    "index": 93,
+    "nct_id": "NCT07383103",
+    "text": "Refusal of the attending staff or patient family;",
+    "label": "UNKNOWN",
+    "notes": "Not documented"
+  },
+  {
+    "index": 94,
+    "nct_id": "NCT07383103",
+    "text": "Current participation in another clinical trial.",
+    "label": "UNKNOWN",
+    "notes": "Not documented"
+  }
+]

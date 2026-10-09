@@ -172,6 +172,8 @@ def check_rule(rule, values):
 
     results = []
     for v in values:
+        if v["unit"] is None and "age" in rule.variable.lower():
+            v = {**v, "unit": "years"}
         if rule.unit is None and v["unit"] is None:
             converted = v["number"]
         else:
