@@ -1,4 +1,6 @@
 # Clinical RAG: Patient Snapshot and Trial Pre-Screening
+
+![tests](https://github.com/ManvishK7122/clinical-rag/actions/workflows/tests.yml/badge.svg)
  
 Turns an ICU clinical note (PDF) into a **verified patient snapshot** for nurses and **pre-screens the patient against clinical trial eligibility criteria**. Every fact is cited to the exact page and quote it came from, and anything the tool can't prove is handed back to a human as UNKNOWN.
  
@@ -60,7 +62,7 @@ All results are on a synthetic ICU note (septic shock from pneumonia, ARDS, AKI)
 |---|---|
 | Active medications | 8/8 |
 | Labs (abnormal / not abnormal / not labeled) | 23/23 (11/11, 3/3, 9/9) |
-| Medications held or not given | 2/3 |
+| Medications held, stopped, or considered | 3/3 |
 | Items wrongly grouped | 0 |
 | Quotes that failed verification | 2–3 of 56 (flagged, not trusted) |
  
@@ -75,6 +77,22 @@ All results are on a synthetic ICU note (septic shock from pneumonia, ARDS, AKI)
  
 The first version wrongly cleared a "within 72 hours of intubation" criterion and wrongly blocked a patient for "chronic respiratory disease" because of acute ARDS. Moving time windows into code rules and teaching the fact check to separate chronic from acute conditions fixed both.
  
+### Held-out notes (not used while building)
+
+To check that results aren't tuned to one note, the snapshot was run on notes it was never developed on, with answer keys written **before** running the tool (`python -m evals.run_heldout`). Stable across 3 runs.
+
+| Note | Source | Given meds | Not-given meds | Labs | Conflicts |
+|---|---|---|---|---|---|
+| Discharge summary, 75M, takotsubo | [Asclepius](https://huggingface.co/datasets/starmpcc/Asclepius-Synthetic-Clinical-Notes) (independent) | 6/6 | 0/0 | 5/5 | 0 |
+| ICU progress note, 61F, GI bleed | Self-written synthetic (not independent) | 5/5 | 6/6 | 13/13 | 0 |
+| **Total** | | **11/11** | **6/6** | **18/18** | **0** |
+
+What held-out testing caught along the way:
+- **Contradictory medication statuses.** On the first run, heparin and metoprolol were listed as both *active* and *discontinued*, though the note never said they were stopped. The original eval counted these as hits. The eval now counts conflicts, and a "not given" status (held, discontinued, considered, planned) is accepted only if its verified quote contains a matching word ("stopped", "held", "consider"...). Unsupported statuses are dropped if contradicted, otherwise flagged for the nurse.
+- **Drug classes and labs without numbers** ("dual antiplatelet therapy", "troponin slightly elevated") were missed until the prompts asked for them.
+
+**Testing and cost:** 64 unit tests cover the rule engine and medication-status checks and run on every push (`python -m pytest`). A snapshot costs about $0.003 to $0.012 and 25 to 45 seconds per note (gpt-4o-mini); every run saves its cost, token count, timing, and git commit.
+
 ### Earlier stage: question answering over the note
  
 | Version | Change | LLM-judge score |
@@ -86,12 +104,11 @@ Debugging showed retrieval was finding the right passages but generation still d
  
 ## Known limitations
  
-- **Tested on one synthetic note.** Next step is held-out notes written answer-key-first, to show the results generalize.
-- **One held medication is still missed** (dexmedetomidine, mentioned only as "consider... not today").
+- **Only 2 held-out notes so far, one self-written.** More independent notes (MTSamples, MIMIC with a local model) are next.
 - **Ratio criteria** (e.g., weight per cm of height) return UNKNOWN; derived values aren't computed yet.
 - **Time windows always return UNKNOWN** by design; a single note can't confirm timing.
 - **No OCR.** Scanned PDFs without a text layer are rejected.
-- **Cost and latency aren't measured yet.**
+- **Home medications have no category of their own** and can be mislabeled (they are flagged when the status isn't supported).
 ## Run it
  
 Requires Python 3.10+ and an OpenAI API key. Use synthetic notes only.
@@ -136,8 +153,8 @@ python -m evals.label_criteria NCT06849570
  
 ## Next steps
  
-- Held-out synthetic notes and unit tests for the rule engine
-- Cost and latency logging per run
+- More independent held-out notes (MTSamples; MIMIC with a local model)
+- Baseline comparison: LLM decides everything vs. LLM reads, code decides
 - FastAPI service and a simple web page: upload a note, get the snapshot and pre-screen
 - A timed test with a clinician: minutes by hand vs. with the tool
 ## Stack

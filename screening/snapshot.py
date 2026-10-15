@@ -113,6 +113,9 @@ The same medication can appear twice with different statuses (for example, an
 infusion and a separate bolus).
 Include medications that were stopped, switched, held, considered, or decided
 against. A nurse needs these as much as the active ones.
+If the note names a drug class or regimen instead of a specific drug (for example
+"dual antiplatelet therapy", "broad-spectrum antibiotics", "stress-dose steroids",
+"DVT prophylaxis with heparin"), list it using the note's own words.
 
 Return {{"items": [{{"name": "...", "dose": "..." or null, "status": "...", {EVIDENCE_SHAPE}}}]}}"""),
 
@@ -124,7 +127,12 @@ For each value, copy into note_label the note's OWN interpretive words for it,
 exactly as written (for example "low", "elevated", "severe AKI", "anemia",
 "normalized", "therapeutic", "improving"). If the note puts several values under
 one label (for example "mild transaminitis"), copy that label for each of them.
-If the note gives no words about the value, note_label is null. Never write your
+If the note gives no words about the value, note_label is null.
+Also include labs the note describes WITHOUT a number (for example "troponin was
+slightly elevated", "creatinine was elevated"): set value to the note's words
+(for example "slightly elevated") and copy the same words into note_label.
+Only include actual lab tests, not diagnoses (for example "anemia" alone is a
+diagnosis, not a lab). Never write your
 own judgment (such as "abnormal" or "normal") unless those exact words are in the note.
 If the note gives a target or goal range for a value (for example "target
 140-180"), copy it into target_range, otherwise null.
@@ -170,7 +178,8 @@ FOUND_LIST
 Read the WHOLE note again, every page and every section (including glucose or
 insulin management, sedation and delirium plans, nutrition, prophylaxis, and
 checklists). List ONLY medications that are mentioned in the note but are
-MISSING from the list above. Use the same status rules: active, given_once,
+MISSING from the list above, including drug classes or regimens named instead of a
+specific drug (for example "dual antiplatelet therapy"). Use the same status rules: active, given_once,
 held, discontinued, considered, planned. If nothing is missing, return an empty list.
 
 Return {{"items": [{{"name": "...", "dose": "..." or null, "status": "...", {EVIDENCE_SHAPE}}}]}}"""

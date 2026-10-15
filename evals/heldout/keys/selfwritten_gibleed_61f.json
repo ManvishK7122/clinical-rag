@@ -1,12 +1,41 @@
 {
-  "_note": "Answer key for selfwritten_gibleed_61f.pdf. Written FIRST; the note was then written to match it. Self-written synthetic note designed to test SI units, abbreviations, held/stopped/considered meds, and values that change across days.",
+  "_note": "Answer key for selfwritten_gibleed_61f.pdf. Written FIRST; the note was then written to match it. Self-written synthetic note designed to test SI units, abbreviations, held/stopped/considered meds, and values that change across days. Key fix (after first run): added ibuprofen to not_given; the note says 'Ibuprofen stopped permanently' and it was missed when the key was written.",
   "medications": {
-    "given": ["norepinephrine|ne", "pantoprazole|ppi", "propofol", "fentanyl", "piperacillin|pip tazo|zosyn"],
-    "not_given": ["vancomycin|vanc", "octreotide", "enoxaparin|lovenox", "metoprolol", "iron"]
+    "given": [
+      "norepinephrine|ne",
+      "pantoprazole|ppi",
+      "propofol",
+      "fentanyl",
+      "piperacillin|pip tazo|zosyn"
+    ],
+    "not_given": [
+      "vancomycin|vanc",
+      "octreotide",
+      "enoxaparin|lovenox",
+      "metoprolol",
+      "iron",
+      "ibuprofen"
+    ]
   },
   "labs": {
-    "abnormal": ["hgb|hemoglobin|hb", "inr", "urea|bun", "cr|creatinine", "lactate", "albumin"],
-    "not_abnormal": ["na|sodium", "k|potassium", "glucose"],
-    "not_labeled": ["plt|platelet|platelets", "wbc", "hco3|bicarbonate", "mg|magnesium"]
+    "abnormal": [
+      "hgb|hemoglobin|hb",
+      "inr",
+      "urea|bun",
+      "cr|creatinine",
+      "lactate",
+      "albumin"
+    ],
+    "not_abnormal": [
+      "na|sodium",
+      "k|potassium",
+      "glucose"
+    ],
+    "not_labeled": [
+      "plt|platelet|platelets",
+      "wbc",
+      "hco3|bicarbonate",
+      "mg|magnesium"
+    ]
   }
 }
