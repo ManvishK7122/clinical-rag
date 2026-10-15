@@ -22,6 +22,9 @@ A tool that turns an ICU clinical note (PDF) into a verified patient snapshot fo
 - `screening/matcher.py`: code rules first (time windows, pregnancy and sex), then numeric or fact checks
 - `screening/trials.py`: fetch and freeze trials from ClinicalTrials.gov
 - `evals/`: answer keys, `label_criteria.py`, `eval_snapshot.py`, `eval_matcher.py`, saved results
+- `evals/heldout/`: held-out notes and keys (keys written before running), `run_heldout.py`
+- `tests/`: unit tests for code decisions (no API calls); CI runs them on every push
+- Medication status is decided in code (`check_med_statuses` in snapshot.py) from the words around each med; the model's status is only kept, and flagged, when the words are unclear
 - `query.py`, `eval.py`, `prompts.py`: earlier question-answering stage
 
 ## How to run (from the repo root, with the venv active)
@@ -34,8 +37,10 @@ python -m evals.eval_matcher outputs/match_septic_icu_Sample_ICU_note.json evals
 
 ## Definition of done for any change
 1. Run both evals and compare with the current baseline:
-   - Snapshot: active meds 8/8, labs 23/23, not-given meds 2/3, wrong group 0, unverified quotes about 2–3 of 56
+   - Snapshot (original note): active meds 8/8, labs 23/23, not-given meds 3/3, wrong group 0, conflicts 0, unverified quotes about 2–3 of 56
+   - Held-out (`python -m evals.run_heldout --repeats 3`, 4 notes): given 22/22, not given 13–14/15, labs 48/50, **conflicts 0**
    - Matcher (38 labeled criteria): accuracy 79%, **false clears 0**, false blocks 0, missed info 8
+   - Unit tests: `python -m pytest -q` all pass (77)
 2. If a number moves unexpectedly, run 3 times to separate a real change from run-to-run noise.
 3. Show a before/after table. Read the raw outputs for any case that changed.
 4. Keep commits small with clear messages.

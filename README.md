@@ -151,6 +151,13 @@ python -m evals.eval_matcher outputs/match_septic_icu_Sample_ICU_note.json evals
 # Label more criteria by hand (t / f / u)
 python -m evals.label_criteria NCT06849570
 ```
+
+Unit tests (no API calls) and the held-out evaluation:
+
+```bash
+python -m pytest -q
+python -m evals.run_heldout --repeats 3
+```
  
 ## Project structure
  
@@ -161,6 +168,9 @@ python -m evals.label_criteria NCT06849570
 | `screening/matcher.py` | Trial pre-screening: code rules first, then numeric or fact checks |
 | `screening/trials.py` | Fetches and freezes trials from ClinicalTrials.gov |
 | `evals/` | Answer keys, labeling tool, and evaluation scripts |
+| `evals/heldout/` | Held-out notes, answer keys written before running, labeling rules, sources and licenses |
+| `tests/` | Unit tests for the rule engine and medication-status rules (run in CI on every push) |
+| `CLAUDE.md` | Project rules for AI coding assistants (safety rules, definition of done) |
 | `query.py`, `eval.py`, `prompts.py` | Earlier question-answering stage and its evaluation |
  
 ## Next steps
