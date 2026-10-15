@@ -16,3 +16,12 @@ OUTPUT_DIR = "outputs"         # snapshots and match reports are saved here
 TRIALS_STATUS = "RECRUITING"   # only search trials that are currently enrolling
 TRIALS_PAGE_SIZE = 10          # how many trials to fetch per search
 TRIALS_DIR = "evals/trials"    # frozen copies of search results, so evals are repeatable
+
+# Reliability and cost tracking
+MAX_RETRIES = 3          # retry a failed API call this many times (with backoff)
+REQUEST_TIMEOUT = 60     # seconds before an API call is abandoned
+# USD per 1M tokens: (input, output). Check current prices on OpenAI's pricing page.
+PRICE_PER_1M = {
+    "gpt-4o-mini": (0.15, 0.60),
+    "gpt-4o": (2.50, 10.00),
+}

@@ -25,12 +25,13 @@ Usage:
 """
 
 import argparse
+import time
 import json
 import re
 from pathlib import Path
 
 from config import DATA_DIR, DEFAULT_FILENAME, OUTPUT_DIR
-from screening.snapshot import (Evidence, ask_json, extract_patient, load_pages,
+from screening.snapshot import (Evidence, ask_json, print_run_info, run_info, extract_patient, load_pages,
                                 note_with_page_markers, verify_evidence)
 from screening.rules import check_numeric, parse_criterion
 from screening.trials import load_trials
@@ -282,8 +283,11 @@ if __name__ == "__main__":
         out, n = make_key(trial_set, Path("evals") / f"criteria_key_{args.trials}.json")
         print(f"Wrote {n} criteria to {out}. Fill in each label with TRUE, FALSE, or UNKNOWN.")
     else:
+        started = time.perf_counter()
         report = screen_patient(args.pdf, trial_set)
+        report["run"] = run_info(started)
         print_report(report)
+        print_run_info(report["run"])
         out = Path(OUTPUT_DIR) / f"match_{args.trials}_{Path(args.pdf).stem}.json"
         out.parent.mkdir(parents=True, exist_ok=True)
         out.write_text(json.dumps(report, indent=2))

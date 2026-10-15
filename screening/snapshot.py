@@ -14,7 +14,10 @@ Design choices:
 
 import json
 import re
+import subprocess
 import sys
+import time
+from datetime import datetime, timezone
 from pathlib import Path
 from typing import Literal, Optional
 
@@ -23,10 +26,14 @@ from openai import OpenAI
 from pydantic import BaseModel, ValidationError, field_validator
 from pypdf import PdfReader
 
-from config import DATA_DIR, DEFAULT_FILENAME, EXTRACT_MODEL, OUTPUT_DIR
+from config import (DATA_DIR, DEFAULT_FILENAME, EXTRACT_MODEL, MAX_RETRIES, OUTPUT_DIR,
+                    PRICE_PER_1M, REQUEST_TIMEOUT)
 
 load_dotenv()
-client = OpenAI()
+client = OpenAI(max_retries=MAX_RETRIES, timeout=REQUEST_TIMEOUT)
+
+# One entry per model call: model, tokens, seconds. Summarized by run_info().
+USAGE = []
 
 
 class Evidence(BaseModel):
@@ -231,6 +238,7 @@ def verify_evidence(evidence, pages):
 
 
 def ask_json(instructions, note_text):
+    start = time.perf_counter()
     response = client.chat.completions.create(
         model=EXTRACT_MODEL,
         temperature=0,
@@ -240,7 +248,48 @@ def ask_json(instructions, note_text):
             {"role": "user", "content": f"{instructions}\n\nNOTE:\n{note_text}"},
         ],
     )
+    usage = response.usage
+    USAGE.append({
+        "model": EXTRACT_MODEL,
+        "input_tokens": usage.prompt_tokens if usage else 0,
+        "output_tokens": usage.completion_tokens if usage else 0,
+        "seconds": round(time.perf_counter() - start, 2),
+    })
     return json.loads(response.choices[0].message.content)
+
+
+def _git_commit():
+    try:
+        return subprocess.run(["git", "rev-parse", "--short", "HEAD"], capture_output=True,
+                              text=True, check=True).stdout.strip()
+    except Exception:
+        return "unknown"
+
+
+def run_info(started):
+    """Cost, speed, and version details for one run, saved next to the results."""
+    input_tokens = sum(u["input_tokens"] for u in USAGE)
+    output_tokens = sum(u["output_tokens"] for u in USAGE)
+    cost = 0.0
+    for u in USAGE:
+        price_in, price_out = PRICE_PER_1M.get(u["model"], (0.0, 0.0))
+        cost += (u["input_tokens"] * price_in + u["output_tokens"] * price_out) / 1_000_000
+    return {
+        "timestamp": datetime.now(timezone.utc).isoformat(timespec="seconds"),
+        "git_commit": _git_commit(),
+        "model": EXTRACT_MODEL,
+        "model_calls": len(USAGE),
+        "input_tokens": input_tokens,
+        "output_tokens": output_tokens,
+        "cost_usd": round(cost, 4),
+        "total_seconds": round(time.perf_counter() - started, 1),
+        "slowest_call_seconds": max((u["seconds"] for u in USAGE), default=0),
+    }
+
+
+def print_run_info(run):
+    print(f"\nRun: {run['model_calls']} model calls, {run['input_tokens'] + run['output_tokens']:,} tokens, "
+          f"${run['cost_usd']:.4f}, {run['total_seconds']}s (commit {run['git_commit']})")
 
 
 ABNORMAL_WORDS = {"low", "high", "elevated", "severe", "severely", "critical", "abnormal",
@@ -406,8 +455,11 @@ def print_snapshot(s):
 
 if __name__ == "__main__":
     pdf = Path(sys.argv[1]) if len(sys.argv) > 1 else Path(DATA_DIR) / DEFAULT_FILENAME
+    started = time.perf_counter()
     snap = build_snapshot(pdf)
+    snap["run"] = run_info(started)
     print_snapshot(snap)
+    print_run_info(snap["run"])
     out = Path(OUTPUT_DIR) / f"snapshot_{pdf.stem}.json"
     out.parent.mkdir(parents=True, exist_ok=True)
     out.write_text(json.dumps(snap, indent=2))
