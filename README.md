@@ -79,19 +79,30 @@ The first version wrongly cleared a "within 72 hours of intubation" criterion an
  
 ### Held-out notes (not used while building)
 
-To check that results aren't tuned to one note, the snapshot was run on notes it was never developed on, with answer keys written **before** running the tool (`python -m evals.run_heldout`). Stable across 3 runs.
+To check that results aren't tuned to one note, the snapshot is run on notes it was not developed on, with answer keys written **before** running the tool. `python -m evals.run_heldout --repeats 3` runs every note 3 times and reports the range.
 
-| Note | Source | Given meds | Not-given meds | Labs | Conflicts |
-|---|---|---|---|---|---|
-| Discharge summary, 75M, takotsubo | [Asclepius](https://huggingface.co/datasets/starmpcc/Asclepius-Synthetic-Clinical-Notes) (independent) | 6/6 | 0/0 | 5/5 | 0 |
-| ICU progress note, 61F, GI bleed | Self-written synthetic (not independent) | 5/5 | 6/6 | 13/13 | 0 |
-| **Total** | | **11/11** | **6/6** | **18/18** | **0** |
+| Note | Source | Independent? |
+|---|---|---|
+| Discharge summary, 75M, takotsubo | [Asclepius](https://huggingface.co/datasets/starmpcc/Asclepius-Synthetic-Clinical-Notes) | Yes |
+| ICU follow-up, 68M, GI bleed + COPD | [MTSamples](https://www.kaggle.com/datasets/tboyle10/medicaltranscriptions) | Yes |
+| Discharge summary, respiratory failure | MTSamples | Yes |
+| ICU progress note, 61F, GI bleed (SI units, abbreviations) | Self-written | No |
 
-What held-out testing caught along the way:
-- **Contradictory medication statuses.** On the first run, heparin and metoprolol were listed as both *active* and *discontinued*, though the note never said they were stopped. The original eval counted these as hits. The eval now counts conflicts, and a "not given" status (held, discontinued, considered, planned) is accepted only if its verified quote contains a matching word ("stopped", "held", "consider"...). Unsupported statuses are dropped if contradicted, otherwise flagged for the nurse.
-- **Drug classes and labs without numbers** ("dual antiplatelet therapy", "troponin slightly elevated") were missed until the prompts asked for them.
+**Results across 3 runs (4 notes):**
 
-**Testing and cost:** 64 unit tests cover the rule engine and medication-status checks and run on every push (`python -m pytest`). A snapshot costs about $0.003 to $0.012 and 25 to 45 seconds per note (gpt-4o-mini); every run saves its cost, token count, timing, and git commit.
+| Group | Worst to best | Conflicts |
+|---|---|---|
+| Given medications | 22/22 every run | 0 |
+| Not-given medications (stopped, held, considered, planned) | 13 to 14 of 15 | 0 |
+| Labs, all groups | 48/50 every run | 0 |
+
+The misses: "avoid NSAIDs" is not always listed; one antibiotic course ("treated successfully with Levaquin", not in the discharge list) is ambiguous in the note and came back as active in 2 of 3 runs (flagged in the third); two lab interpretations written in the plan section, far from the value, come back as "not labeled" rather than with a wrong label. No run produced a conflict.
+
+**What held-out testing changed in the design:**
+- **Contradictions were hidden.** The first run listed heparin as both *active* and *discontinued*; the old eval counted it as correct. The eval now counts conflicts.
+- **Medication status is now decided in code.** Run to run, the model gave different statuses for the same words ("we will add guaifenesin" came back as *active* once). Now the model only finds each medication and its quote; code reads the words around that medication and sets the status ("discontinued", "held", "consider", "will add", "discharged with"...). The same words give the same status every run. When the words are unclear, the model's status is kept and flagged for the nurse.
+
+**Testing and cost:** 77 unit tests cover the rule engine and medication-status rules and run on every push (`python -m pytest`). A snapshot costs about $0.003 to $0.012 and 25 to 45 seconds per note (gpt-4o-mini); every run saves its cost, token count, timing, and git commit.
 
 ### Earlier stage: question answering over the note
  
@@ -104,11 +115,12 @@ Debugging showed retrieval was finding the right passages but generation still d
  
 ## Known limitations
  
-- **Only 2 held-out notes so far, one self-written.** More independent notes (MTSamples, MIMIC with a local model) are next.
+- **4 held-out notes, and they have now informed fixes.** Fresh notes that are never used for fixing are needed for a final, fully held-out score. Real ICU notes (MIMIC, with a local model) are next.
 - **Ratio criteria** (e.g., weight per cm of height) return UNKNOWN; derived values aren't computed yet.
 - **Time windows always return UNKNOWN** by design; a single note can't confirm timing.
 - **No OCR.** Scanned PDFs without a text layer are rejected.
-- **Home medications have no category of their own** and can be mislabeled (they are flagged when the status isn't supported).
+- **Home medications have no category of their own**; they are flagged rather than guessed.
+- **Lab interpretations written far from the value** (for example in the plan section) are not linked to the value.
 ## Run it
  
 Requires Python 3.10+ and an OpenAI API key. Use synthetic notes only.

@@ -1,0 +1,12 @@
+{
+  "_note": "Answer key for mtsamples_melena_icu_68m.pdf (MTSamples 'Melena - ICU Followup'). Written BEFORE running the tool. Decisions: 'continue' and 'increase the dose' = given; 'we will add' = planned (not given); 'consider iron, vitamin C, folate and B12' = considered (not given); 'avoid NSAIDs' = not given. PRBC transfusion is a blood product, not scored. Labs: WBC 'normalized' = not_abnormal; CEA 'elevated' and 'low total iron binding capacity' = abnormal; hemoglobin 'returned to baseline' has no explicit normal word, so not_labeled; 'stable' is a trend, not a label. Occult blood and iron saturation not scored (no clean value).",
+  "medications": {
+    "given": ["ppi|proton pump inhibitor|omeprazole|pantoprazole|esomeprazole", "omnicef|cefdinir", "azithromycin"],
+    "not_given": ["guaifenesin", "acetylcysteine|n acetyl cysteine|nac", "iron", "vitamin c", "folate|folic acid", "b12|cyanocobalamin", "nsaid|nsaids"]
+  },
+  "labs": {
+    "abnormal": ["cea", "tibc|total iron binding capacity"],
+    "not_abnormal": ["wbc|white count|white blood cell"],
+    "not_labeled": ["hgb|hemoglobin", "hct|hematocrit", "plt|platelet|platelets", "na|sodium", "k|potassium", "cl|chloride", "bicarb|hco3|bicarbonate", "bun", "cr|creatinine", "glucose", "calcium", "inr", "tsh", "ferritin"]
+  }
+}

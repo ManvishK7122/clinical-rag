@@ -1,13 +1,15 @@
 """
-Tests for check_med_statuses in screening/snapshot.py: a "not given" status
-(held, discontinued, considered, planned) must be backed by the note's own words.
-No API calls.
+Tests for medication status decisions in screening/snapshot.py.
+Code reads the words around each medication in its verified quote and decides the
+status, so the same note gives the same status every run. No API calls.
 
 Run from the repo root:
     python -m pytest -q
 """
 
-from screening.snapshot import check_med_statuses, same_medication
+import pytest
+
+from screening.snapshot import check_med_statuses, same_medication, statuses_in_words
 
 
 def med(name, status, quote, verified=True):
@@ -15,8 +17,9 @@ def med(name, status, quote, verified=True):
             "evidence": {"page": 1, "quote": quote, "verified": verified}}
 
 
-def names(meds):
-    return [(m["name"], m["status"]) for m in meds]
+def one(name, model_status, quote, verified=True):
+    kept, _ = check_med_statuses([med(name, model_status, quote, verified)])
+    return kept[0]
 
 
 def test_same_medication_ignores_generic_words():
@@ -25,50 +28,73 @@ def test_same_medication_ignores_generic_words():
     assert not same_medication("insulin", "heparin")
 
 
-def test_supported_discontinued_is_kept():
-    kept, dropped = check_med_statuses([med("vanc", "discontinued", "Vanc discontinued on day 2")])
-    assert names(kept) == [("vanc", "discontinued")]
-    assert kept[0]["status_supported"] and dropped == []
+@pytest.mark.parametrize("drug, quote, expected", [
+    ("vanc", "Vanc discontinued on day 2 after MRSA nares PCR negative", "discontinued"),
+    ("dopamine", "was successfully removed from dopamine", "discontinued"),
+    ("enoxaparin", "Enoxaparin DVT prophylaxis HELD due to active GI bleed", "held"),
+    ("iron", "consider iron, vitamin C, folate and B12 supplementation", "considered"),
+    ("NSAIDs", "Dr. X recommended to avoid NSAIDs in the future", "considered"),
+    ("guaifenesin", "We will add guaifenesin and N-acetyl-cysteine", "planned"),
+    ("fentanyl", "fentanyl bolus given with improvement", "given_once"),
+    ("Omnicef", "We will continue him on his oral Omnicef", "active"),
+    ("hydroxyurea", "the patient was discharged with hydroxyurea 1000 mg", "active"),
+    ("Bumex", "Bumex 2 mg p.o. daily", "active"),
+    ("norepinephrine", "norepinephrine held at 0.05 mcg/kg/min", "active"),
+])
+def test_code_sets_status_from_words(drug, quote, expected):
+    # The model guesses a different status on purpose; code must correct it.
+    m = one(drug, "active" if expected != "active" else "discontinued", quote)
+    assert m["status"] == expected
+    assert m["status_supported"] is True
 
 
-def test_contradiction_without_stop_word_is_dropped():
-    # The Asclepius case: heparin is running, but the model also called it discontinued.
+def test_each_drug_in_a_shared_sentence_gets_its_own_status():
+    quote = "De-escalation from vancomycin completed yesterday; now on ceftriaxone 1g IV Q24h."
+    assert one("vancomycin", "active", quote)["status"] == "discontinued"
+    assert one("ceftriaxone", "discontinued", quote)["status"] == "active"
+
+
+def test_unverified_quote_never_decides():
+    m = one("enoxaparin", "held", "enoxaparin held", verified=False)
+    assert m["status"] == "held" and m["status_supported"] is False
+
+
+def test_no_status_words_keeps_model_status_and_flags_not_given():
+    m = one("Levaquin", "discontinued", "treated successfully with Zyvox and Levaquin")
+    assert m["status"] == "discontinued" and m["status_supported"] is False
+
+
+def test_mixed_words_keep_model_status_only_if_supported():
+    quote = "NE gtt 0.08 mcg/kg/min, will start weaning"
+    assert statuses_in_words("NE", quote) >= {"active"}
+    assert one("NE", "active", quote)["status_supported"] is True
+
+
+def test_contradiction_and_duplicates_resolved():
+    # The Asclepius case: the model also called a running heparin drip "discontinued".
     meds = [med("heparin", "active", "was started on heparin infusion"),
             med("heparin infusion", "discontinued", "was started on heparin infusion.")]
     kept, dropped = check_med_statuses(meds)
-    assert names(kept) == [("heparin", "active")]
-    assert names(dropped) == [("heparin infusion", "discontinued")]
+    assert [(m["name"], m["status"]) for m in kept] == [("heparin", "active")]
+    assert len(dropped) == 1
 
 
-def test_both_statuses_kept_when_both_supported():
-    # Infusion running and a separate dose stopped: both are real.
+def test_real_double_status_is_kept():
     meds = [med("insulin", "active", "insulin drip 2 units/hr"),
             med("insulin", "discontinued", "sliding scale insulin stopped")]
     kept, dropped = check_med_statuses(meds)
-    assert len(kept) == 2 and dropped == []
+    assert {m["status"] for m in kept} == {"active", "discontinued"} and dropped == []
 
 
-def test_unsupported_status_alone_is_flagged_not_dropped():
-    # Nothing contradicts it, so keep it for the nurse but mark it.
-    kept, dropped = check_med_statuses(
-        [med("albuterol", "considered", "albuterol MDI 4 puffs Q4h via in-line adapter")])
-    assert dropped == []
-    assert kept[0]["status_supported"] is False
+def test_home_medication_list_is_not_decided_by_code():
+    quote = "Home medications: Metoprolol 25 mg BID, ibuprofen 400 mg TID, omeprazole 20 mg daily."
+    assert statuses_in_words("omeprazole", quote) == set()
 
 
-def test_unverified_quote_cannot_support_a_status():
-    kept, _ = check_med_statuses([med("enoxaparin", "held", "enoxaparin held", verified=False)])
-    assert kept[0]["status_supported"] is False
+def test_received_is_a_completed_dose():
+    assert one("PRBC", "active", "the patient has received 2 units of packed red blood cells",
+               )["status"] == "given_once"
 
 
-def test_each_status_needs_its_own_cue():
-    assert check_med_statuses([med("x", "held", "x held for procedure")])[0][0]["status_supported"]
-    assert check_med_statuses([med("x", "considered", "consider x if worse")])[0][0]["status_supported"]
-    assert check_med_statuses([med("x", "planned", "will start x tomorrow")])[0][0]["status_supported"]
-    # "held" needs a hold word, not just any stop word
-    assert not check_med_statuses([med("x", "held", "x discontinued")])[0][0]["status_supported"]
-
-
-def test_active_status_needs_no_cue():
-    kept, _ = check_med_statuses([med("norepinephrine", "active", "NE gtt 0.08 mcg/kg/min")])
-    assert kept[0]["status_supported"] is True
+def test_once_daily_is_active_not_a_single_dose():
+    assert one("Protonix", "given_once", "Protonix 40 mg once daily")["status"] == "active"

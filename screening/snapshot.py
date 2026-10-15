@@ -103,7 +103,8 @@ nutrition, infection, hematology, checklists, and plans. Check every page.
 
 Set status using only the note's words:
 - active: currently being given (infusions, drips, scheduled medications,
-  "on X", "continue X", "weaning X")
+  "on X", "continue X", "weaning X"), including medications the patient is
+  discharged on or sent home with ("discharged with X", discharge medications)
 - given_once: a single dose was given (for example, a bolus)
 - held: paused. Note: "held at [dose]" means continued at that dose, so use active.
 - discontinued: stopped or replaced
@@ -115,7 +116,8 @@ Include medications that were stopped, switched, held, considered, or decided
 against. A nurse needs these as much as the active ones.
 If the note names a drug class or regimen instead of a specific drug (for example
 "dual antiplatelet therapy", "broad-spectrum antibiotics", "stress-dose steroids",
-"DVT prophylaxis with heparin"), list it using the note's own words.
+"DVT prophylaxis with heparin"), list it using the note's own words. This includes
+classes the note says to avoid (for example "avoid NSAIDs" is NSAIDs, status considered).
 
 Return {{"items": [{{"name": "...", "dose": "..." or null, "status": "...", {EVIDENCE_SHAPE}}}]}}"""),
 
@@ -381,22 +383,33 @@ def find_missed_meds(meds, note_text, pages):
         known.add(med.name.lower())
     return added, skipped
 
-# A "not given" status must be backed by the note's own words. The model proposes a
-# status; code checks that the verified quote contains a matching cue word.
-STATUS_CUES = {
-    "discontinued": r"\b(discontinu\w*|d/?c'?d|stopp?\w*|stop|off|de-?escalat\w*|switch\w*|changed|"
-                    r"replac\w*|transition\w*|no longer|ceas\w*|removed|completed)\b",
-    "held": r"\b(held|hold\w*|paus\w*)\b",
-    "considered": r"\b(consider\w*|could|may|might|if|suggest\w*|discuss\w*|decided against|"
-                  r"avoid\w*|defer\w*|possibl\w*|potential\w*|not today)\b",
-    "planned": r"\b(plan\w*|will|start\w*|order\w*|schedul\w*|once|after|then|recommend\w*|"
-               r"prior to|pending|next)\b",
+# ---------- Medication status: decided in code from the note's words ----------
+# The model finds each medication and an exact quote. Code reads the words around
+# the medication in that quote and decides the status, so the same note gives the
+# same status every run. The model's status is only used when the words are unclear,
+# and then it is flagged for the nurse unless the words support it.
+STATUS_WORDS = {
+    "discontinued": r"\b(discontinu\w*|d/c'?d|stopped|stop|removed from|weaned off|off of|"
+                    r"de-?escalat\w*|switched from|replaced|no longer|ceased|completed)\b",
+    "held": r"\b(held|hold|holding|on hold|paused)\b",
+    "considered": r"\b(consider\w*|avoid\w*|if needed|could|may|might|suggest\w*|discuss\w*|"
+                  r"decided against|not today|defer\w*)\b",
+    "planned": r"\b(will (add|start|begin|initiate|give)|plan(ned)? to (add|start|begin|give)|"
+               r"to be started|pending)\b",
+    "given_once": r"\b(bolus|single dose|one dose|one[- ]time|x ?1|stat dose|once only|received|was given)\b",
+    "active": r"\b(continu\w*|maintain\w*|remain\w*|running|receiving|currently|gtt|drip|infusion|"
+              r"discharged (with|on)|going (home )?with|started on|now on|on (iv|po|oral)|"
+              r"increas\w*|decreas\w*|titrat\w*|wean\w*)\b",
 }
+# A dose or schedule with no other status words means the medication is being given.
+DOSE_OR_SCHEDULE = (r"\b\d+(\.\d+)?\s?(mg|mcg|g|gm|units?|ml|meq)\b|\b(daily|bid|tid|qid|q\d+h|"
+                    r"b\.i\.d|t\.i\.d|q\.d|nightly|qhs)\b")
+CLAUSE_SPLIT = r"[;.]|\bnow\b|\bthen\b|\bbut\b"
 GENERIC_MED_WORDS = {"infusion", "gtt", "drip", "iv", "po", "home", "oral", "tablet", "tab", "the"}
 
 
 def _med_words(name):
-    return {w for w in re.findall(r"[a-z]+", name.lower()) if w not in GENERIC_MED_WORDS}
+    return {w for w in re.findall(r"[a-z0-9]+", name.lower()) if w not in GENERIC_MED_WORDS}
 
 
 def same_medication(a, b):
@@ -405,27 +418,60 @@ def same_medication(a, b):
     return bool(wa) and bool(wb) and (wa <= wb or wb <= wa)
 
 
-def check_med_statuses(meds):
-    """Decide in code whether each status is supported by the note.
+def _clause_about(name, quote):
+    """The part of the quote that talks about this medication, so a sentence like
+    'de-escalated from vanc; now on ceftriaxone' is read separately for each drug."""
+    clauses = [c for c in re.split(CLAUSE_SPLIT, quote, flags=re.I) if c.strip()]
+    for word in _med_words(name):
+        for clause in clauses:
+            if re.search(rf"\b{re.escape(word)}", clause, re.I):
+                return clause
+    return quote
 
-    - active / given_once: accepted as proposed.
-    - held / discontinued / considered / planned: supported only if the quote is
-      verified AND contains a matching cue word ("stopped", "held", "consider"...).
-    - If the same medication also has a supported, different status, an unsupported
-      entry is dropped (this removes contradictions like "heparin: active AND
-      discontinued" when the note never says it was stopped).
-    - An unsupported entry with no competing entry is kept but flagged for the nurse.
-    Returns (kept, dropped)."""
+
+def statuses_in_words(name, quote):
+    """Every status the words around this medication point to."""
+    clause = _clause_about(name, quote)
+    if re.search(r"\bheld at\b", clause, re.I):   # "held at 5 mcg" means continued at that dose
+        return {"active"}
+    if re.search(r"\b(home|outpatient|prior to admission) med", clause, re.I):
+        return set()   # a home medication list doesn't say what is given in hospital
+    found = {status for status, pattern in STATUS_WORDS.items() if re.search(pattern, clause, re.I)}
+    if not found and re.search(DOSE_OR_SCHEDULE, clause, re.I):
+        found = {"active"}
+    return found
+
+
+def check_med_statuses(meds):
+    """Decide each medication's status in code. Returns (kept, dropped).
+
+    - Verified quote with exactly one status in its words: code sets that status.
+    - Words point to several statuses: keep the model's status only if the words
+      include it; otherwise flag it.
+    - No status words, or the quote isn't verified: keep the model's status. Active
+      and given-once are accepted; any "not given" status is flagged for the nurse.
+    - Duplicates (same medication, same status) are dropped, and an unsupported
+      entry is dropped when the same medication has a supported, different status."""
     for m in meds:
-        cue = STATUS_CUES.get(m["status"])
-        m["status_supported"] = True if cue is None else bool(
-            m["evidence"]["verified"] and re.search(cue, m["evidence"]["quote"], re.I))
+        ev = m["evidence"]
+        found = statuses_in_words(m["name"], ev["quote"]) if ev["verified"] else set()
+        if len(found) == 1:
+            code_status = next(iter(found))
+            if code_status != m["status"]:
+                m["status_changed_by_code"] = f"{m['status']} -> {code_status}"
+                m["status"] = code_status
+            m["status_supported"] = True
+        elif found:
+            m["status_supported"] = m["status"] in found
+        else:
+            m["status_supported"] = m["status"] in ("active", "given_once")
     kept, dropped = [], []
     for m in meds:
+        duplicate = any(same_medication(m["name"], k["name"]) and k["status"] == m["status"] for k in kept)
         contradicted = not m["status_supported"] and any(
             o is not m and o["status_supported"] and o["status"] != m["status"]
             and same_medication(m["name"], o["name"]) for o in meds)
-        (dropped if contradicted else kept).append(m)
+        (dropped if duplicate or contradicted else kept).append(m)
     return kept, dropped
 
 
@@ -470,7 +516,7 @@ def build_snapshot(filepath):
     snapshot["medications"], dropped = check_med_statuses(snapshot["medications"])
     snapshot["dropped_med_statuses"] = dropped
     if dropped:
-        print(f"  Dropped {len(dropped)} unsupported medication status(es): "
+        print(f"  Removed {len(dropped)} duplicate or contradicted medication entr(ies): "
               + ", ".join(f"{m['name']} ({m['status']})" for m in dropped))
 
     all_evidence = [i["evidence"] for name in SECTIONS if name in snapshot for i in snapshot[name]]
@@ -478,7 +524,8 @@ def build_snapshot(filepath):
         "items": len(all_evidence),
         "unverified_quotes": sum(not e["verified"] for e in all_evidence),
         "malformed_items_skipped": skipped_total,
-        "unsupported_med_statuses_dropped": len(dropped),
+        "med_entries_removed": len(dropped),
+        "med_statuses_set_by_code": sum("status_changed_by_code" in m for m in snapshot["medications"]),
         "unsupported_med_statuses_flagged": sum(not m["status_supported"] for m in snapshot["medications"]),
     }
     return snapshot

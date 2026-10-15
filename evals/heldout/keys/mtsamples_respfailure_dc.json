@@ -1,0 +1,12 @@
+{
+  "_note": "Answer key for mtsamples_respfailure_dc.pdf (MTSamples 'Discharge Summary - Respiratory Failure'). Written BEFORE running the tool. Decisions: discharge medications and TPN (continued throughout) = given; dopamine ('successfully removed from dopamine') = not given; Levaquin (pneumonia 'treated successfully', not in discharge meds) = not given (course completed). Ensure is a nutritional supplement, not scored. Labs: only phosphorus is labeled ('a little high') = abnormal; all other values have no label.",
+  "medications": {
+    "given": ["protonix|pantoprazole", "metoclopramide|reglan", "zyvox|linezolid", "diflucan|fluconazole", "bumex|bumetanide", "megace|megestrol", "miralax|polyethylene glycol", "tpn|parenteral nutrition"],
+    "not_given": ["dopamine", "levaquin|levofloxacin"]
+  },
+  "labs": {
+    "abnormal": ["phos|phosphorus"],
+    "not_abnormal": [],
+    "not_labeled": ["wbc|white count", "hgb|hemoglobin", "hct|hematocrit", "plt|platelet|platelets", "na|sodium", "k|potassium", "cl|chloride", "co2|bicarbonate", "glucose", "bun", "cr|creatinine", "calcium", "mg|magnesium", "albumin"]
+  }
+}
