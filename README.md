@@ -1,64 +1,101 @@
-# Clinical RAG
-
-Ask plain-language questions about an ICU clinical note (PDF) and get answers that cite the exact page they came from, with an automated evaluation that checks every answer against the source.
-
-> **Not medical advice.** Built and tested only on a synthetic clinical note. Do not use with real patient data.
-
+# Clinical RAG: Patient Snapshot and Trial Pre-Screening
+ 
+Turns an ICU clinical note (PDF) into a **verified patient snapshot** for nurses and **pre-screens the patient against clinical trial eligibility criteria**. Every fact is cited to the exact page and quote it came from, and anything the tool can't prove is handed back to a human as UNKNOWN.
+ 
+> **Not medical advice.** Built and tested only on synthetic clinical notes. Do not use with real patient data.
+ 
 ## Why I built this
-
+ 
 While traveling in Bali, I got talking with two nurses from Australia. When I asked what the hardest part of their job was, I expected to hear about long shifts or difficult patients. Instead, they talked about paperwork. Every time they took over a patient, they had to dig through pages of clinical notes to find the few things that mattered right then: what medications had actually been given, what the latest labs showed, and what the plan was.
-
-That stuck with me. I work with data and machine learning every day, and this felt like a problem I could actually do something about. So I started building a tool where a nurse could upload a clinical note, ask a question in plain language, and get an answer that points to the exact page it came from, so they can check it in seconds instead of trusting it blindly.
-
-Getting an answer was the easy part. Getting a *correct* one was harder. Early versions listed a medication as given when the note only said it was being considered, which is exactly the kind of mistake that matters in a hospital. Most of this project has been about catching errors like that and proving the fixes work.
-
+ 
+That stuck with me. I work with data and machine learning every day, and this felt like a problem I could actually do something about.
+ 
+The project started as a question-answering tool over the note. Getting an answer was easy; getting a *correct* one was hard. Early versions listed a medication as given when the note only said it was being considered, which is exactly the kind of mistake that matters in a hospital. So the project evolved around one principle.
+ 
+## The principle: the LLM reads, code decides
+ 
+Language models are good at reading messy text and bad at being reliably right about numbers, units, and rules. So the work is split:
+ 
+| The LLM does | Code does |
+|---|---|
+| Finds facts in the note and copies the exact quote | Checks every quote actually exists on the cited page |
+| Turns a trial criterion into a structured rule ("platelets < 50,000/mm³") | Converts units and makes every numeric comparison |
+| Copies values exactly as written | Combines rules with three-valued logic (TRUE / FALSE / UNKNOWN) |
+| | Returns UNKNOWN for time windows, missing values, unit mismatches, or conflicting values |
+ 
+**The tool never says a patient is "eligible."** It clears what the note proves, flags real blockers, and lists everything else for the nurse to check.
+ 
 ## How it works
-
+ 
 ```mermaid
 flowchart LR
-    A[Clinical note PDF] --> B[Extract text per page<br/>pypdf]
-    B --> C[Chunk + embed<br/>LlamaIndex + OpenAI]
-    C --> D[Retrieve top 6 chunks]
-    D --> E[Clinical QA prompt]
-    E --> F[Answer with page citations]
+    A[Clinical note PDF] --> B[Text per page]
+    B --> C[Patient snapshot<br/>meds, labs, changes]
+    C --> D[Quote verification<br/>in code]
+    B --> E[Trial criteria<br/>ClinicalTrials.gov]
+    E --> F{Criterion type}
+    F -->|numeric| G[Code rules:<br/>find value, verify, convert units, compare]
+    F -->|fact| H[Model check +<br/>verified quote]
+    F -->|consent / judgment| I[Nurse]
+    G --> J[Cleared / Blocker / Check]
+    H --> J
+    I --> J
 ```
-
-The pipeline prints three debug checkpoints so a wrong answer can be traced to the stage that caused it:
-
-1. **Extracted text:** is the PDF text real and readable?
-2. **Retrieved chunks:** did retrieval pull the right parts of the note (with page numbers and scores)?
-3. **Final answer:** did the model use those chunks correctly?
-
+ 
+**Patient snapshot** (`screening/snapshot.py`)
+- One structured extraction call per section (medications, labs, medication changes), validated with Pydantic.
+- A second pass looks specifically for medications the first pass missed.
+- Lab labels (abnormal, not abnormal) come only from the note's own words verified on the cited page, otherwise from a target-range check in code. The model is not allowed to invent a label.
+**Trial pre-screening** (`screening/matcher.py`, `screening/rules.py`)
+- Code rules run first: anything with a time window ("within 12 hours") goes to UNKNOWN, since a single note can't confirm timing.
+- Numeric criteria: the model parses the rule and copies values from the note; code verifies the number is inside the quote, converts units, and decides.
+- Fact criteria: a model check that must come with a verified quote, otherwise downgraded to UNKNOWN.
 ## Results
-
-Evaluated on 10 questions about a synthetic ICU note (septic shock from pneumonia, ARDS, AKI). An LLM judge (`gpt-4o-mini`, temperature 0) grades each answer PASS or FAIL on factual accuracy and citation accuracy, and every failure was checked by hand against the note.
-
+ 
+All results are on a synthetic ICU note (septic shock from pneumonia, ARDS, AKI), measured against hand-labeled answer keys.
+ 
+**Patient snapshot** (stable across 3 runs)
+ 
+| Group | Recall |
+|---|---|
+| Active medications | 8/8 |
+| Labs (abnormal / not abnormal / not labeled) | 23/23 (11/11, 3/3, 9/9) |
+| Medications held or not given | 2/3 |
+| Items wrongly grouped | 0 |
+| Quotes that failed verification | 2–3 of 56 (flagged, not trusted) |
+ 
+**Trial pre-screening** (38 hand-labeled criteria, 2 trials from a frozen ClinicalTrials.gov snapshot)
+ 
+| Metric | First version | Current |
+|---|---|---|
+| Accuracy | 64% | 79% |
+| **False clears** (tool says criterion is met when it isn't; the safety metric) | 1 | **0** |
+| False blocks | 1 | 0 |
+| Missed info (UNKNOWN when the note had the answer) | 8 | 8 |
+ 
+The first version wrongly cleared a "within 72 hours of intubation" criterion and wrongly blocked a patient for "chronic respiratory disease" because of acute ARDS. Moving time windows into code rules and teaching the fact check to separate chronic from acute conditions fixed both.
+ 
+### Earlier stage: question answering over the note
+ 
 | Version | Change | LLM-judge score |
 |---|---|---|
-| Baseline | Default settings: 2 chunks retrieved per question | 7/10 |
-| Current | 6 chunks retrieved per question + clinical QA prompt | 9/10 |
-
-Retrieving more chunks per question (2 → 6) fixed answers that were missing information spread across the note, such as the full diagnosis and ventilator settings. More context alone didn't fix reasoning errors, like reporting a planned medication as given, so the clinical prompt handles those.
-
-### Failure modes found and fixed
-
-| Failure | Example from the note | Fix |
-|---|---|---|
-| Planned treatment reported as given | Note says "consider dexmedetomidine... not today"; model listed it as administered | Prompt rule: only list medications the note says were actually given |
-| Similar-sounding field chosen over the right one | Answered "primary diagnosis" with the Primary ICD-10 billing code instead of the Primary ICU Diagnosis | Prompt rule: pick the field that matches the question's clinical meaning, not the most overlapping words |
-| Resolved value still called abnormal | Lactate 1.6, "normalized from 5.2," listed as abnormal | Prompt rule: judge the current value, not the trend language |
-
-### Known limitations
-
-- **Abnormal labs still fail sometimes.** With 8+ lab values in one section, the model drops some (e.g., WBC 18.4, PT/INR) even when retrieval finds the right chunk. I chose not to hardcode outside reference ranges to force a pass, so every answer stays traceable to the note.
-- **Tested on one note so far.** Next step is testing on structurally different notes to show the fixes generalize.
-- **No OCR.** Scanned PDFs without a text layer are rejected with an error.
-- **The judge can be wrong**, which is why failures are verified by hand.
-
+| Baseline | 2 chunks retrieved per question | 7/10 |
+| Improved | 6 chunks + clinical QA prompt | 9/10 |
+ 
+Debugging showed retrieval was finding the right passages but generation still dropped items in long lists, which is why the snapshot now uses targeted per-section extraction instead of RAG.
+ 
+## Known limitations
+ 
+- **Tested on one synthetic note.** Next step is held-out notes written answer-key-first, to show the results generalize.
+- **One held medication is still missed** (dexmedetomidine, mentioned only as "consider... not today").
+- **Ratio criteria** (e.g., weight per cm of height) return UNKNOWN; derived values aren't computed yet.
+- **Time windows always return UNKNOWN** by design; a single note can't confirm timing.
+- **No OCR.** Scanned PDFs without a text layer are rejected.
+- **Cost and latency aren't measured yet.**
 ## Run it
-
-Requires Python 3.10+ and an OpenAI API key.
-
+ 
+Requires Python 3.10+ and an OpenAI API key. Use synthetic notes only.
+ 
 ```bash
 git clone https://github.com/ManvishK7122/clinical-rag.git
 cd clinical-rag
@@ -67,31 +104,42 @@ source venv/bin/activate        # Windows: venv\Scripts\activate
 pip install -r requirements.txt
 cp .env.example .env            # then add your OpenAI API key
 ```
-
-Put a synthetic clinical note PDF in `data/` named `Sample_ICU_note.pdf` (or change `DEFAULT_FILENAME` in `config.py`), then:
-
+ 
+Put a synthetic clinical note PDF in `data/` named `Sample_ICU_note.pdf`, then:
+ 
 ```bash
-python query.py   # ask questions interactively
-python eval.py    # run the 10-question evaluation
+# Patient snapshot, then score it against the answer key
+python -m screening.snapshot
+python -m evals.eval_snapshot
+ 
+# Save a frozen set of trials from ClinicalTrials.gov
+python -m screening.trials --save septic_icu "septic shock" "ARDS" "acute kidney injury"
+ 
+# Pre-screen the patient against specific trials, then score it
+python -m screening.matcher --trials septic_icu --only NCT06849570 NCT07383103
+python -m evals.eval_matcher outputs/match_septic_icu_Sample_ICU_note.json evals/criteria_key_septic_icu.json
+ 
+# Label more criteria by hand (t / f / u)
+python -m evals.label_criteria NCT06849570
 ```
-
+ 
 ## Project structure
-
-| File | Purpose |
+ 
+| Path | Purpose |
 |---|---|
-| `query.py` | Loads the PDF, builds the index, answers questions with debug checkpoints |
-| `prompts.py` | Clinical QA prompt and the reasoning behind each rule |
-| `eval.py` | Runs the 10 test questions and grades them with an LLM judge |
-| `config.py` | Settings such as file name and number of retrieved chunks |
-| `docs/` | Development log with every test run |
-
+| `screening/snapshot.py` | Patient snapshot extraction, quote verification, lab labeling |
+| `screening/rules.py` | Numeric rules in code: parsing, value finding, unit conversion, three-valued logic |
+| `screening/matcher.py` | Trial pre-screening: code rules first, then numeric or fact checks |
+| `screening/trials.py` | Fetches and freezes trials from ClinicalTrials.gov |
+| `evals/` | Answer keys, labeling tool, and evaluation scripts |
+| `query.py`, `eval.py`, `prompts.py` | Earlier question-answering stage and its evaluation |
+ 
 ## Next steps
-
-- Evaluate on more synthetic notes with different layouts
-- Automated tests and CI that fail if accuracy drops below 80%
-- FastAPI service and a simple web UI
-- Compare plain RAG against a tool-calling agent on the same evaluation
-
+ 
+- Held-out synthetic notes and unit tests for the rule engine
+- Cost and latency logging per run
+- FastAPI service and a simple web page: upload a note, get the snapshot and pre-screen
+- A timed test with a clinician: minutes by hand vs. with the tool
 ## Stack
-
-Python, LlamaIndex, OpenAI API, pypdf
+ 
+Python, OpenAI API, Pydantic, pypdf, ClinicalTrials.gov API, LlamaIndex (earlier stage)
