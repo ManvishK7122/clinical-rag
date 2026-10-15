@@ -1,0 +1,12 @@
+{
+  "_note": "Answer key for <note_name>.pdf. Written BEFORE running the tool. Aliases separated by |. Source: <MTSamples / Asclepius / self-written>.",
+  "medications": {
+    "given": [],
+    "not_given": []
+  },
+  "labs": {
+    "abnormal": [],
+    "not_abnormal": [],
+    "not_labeled": []
+  }
+}
