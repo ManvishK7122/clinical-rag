@@ -1,0 +1,12 @@
+{
+  "_note": "Answer key for asclepius_takotsubo_75m.pdf. Written BEFORE running the tool. Source: Asclepius Synthetic Clinical Notes, selected via SQL query on ICU + creatinine + platelet + medication terms. Rules: discharge medications count as given (active at discharge). Labs the note calls 'elevated' without a number are still in the key. Hemoglobin 7.5 has no label in the note, so it is not_labeled.",
+  "medications": {
+    "given": ["metoprolol", "furosemide|lasix", "heparin", "antiplatelet|aspirin|clopidogrel", "hydroxyurea", "ruxolitinib"],
+    "not_given": []
+  },
+  "labs": {
+    "abnormal": ["plt|platelet|platelets", "wbc|white cell|white blood cell", "cr|creatinine", "troponin"],
+    "not_abnormal": [],
+    "not_labeled": ["hgb|hemoglobin|hb"]
+  }
+}

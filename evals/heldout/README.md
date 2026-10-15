@@ -26,3 +26,8 @@ Notes the tool was **not** built or tuned on. They show whether results generali
 python -m evals.run_heldout            # run the tool on every note with a key, then score
 python -m evals.run_heldout --no-run   # re-score saved outputs without calling the API
 ```
+
+## Labeling decisions (apply to every key)
+- Discharge medications count as **given** (active at discharge).
+- Labs the note calls abnormal without giving a number stay in the key.
+- A lab is `abnormal` only if the note's own words say so, even when the value is obviously out of range.

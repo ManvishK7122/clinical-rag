@@ -1,0 +1,12 @@
+{
+  "_note": "Answer key for selfwritten_gibleed_61f.pdf. Written FIRST; the note was then written to match it. Self-written synthetic note designed to test SI units, abbreviations, held/stopped/considered meds, and values that change across days.",
+  "medications": {
+    "given": ["norepinephrine|ne", "pantoprazole|ppi", "propofol", "fentanyl", "piperacillin|pip tazo|zosyn"],
+    "not_given": ["vancomycin|vanc", "octreotide", "enoxaparin|lovenox", "metoprolol", "iron"]
+  },
+  "labs": {
+    "abnormal": ["hgb|hemoglobin|hb", "inr", "urea|bun", "cr|creatinine", "lactate", "albumin"],
+    "not_abnormal": ["na|sodium", "k|potassium", "glucose"],
+    "not_labeled": ["plt|platelet|platelets", "wbc", "hco3|bicarbonate", "mg|magnesium"]
+  }
+}

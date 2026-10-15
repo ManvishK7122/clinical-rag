@@ -25,7 +25,7 @@ def score(snap, key):
     rows, extras = {}, []
     if "medications" in key:
         groups, extra = score_section(snap["medications"], key["medications"],
-                                      lambda m: MED_GROUPS[m["status"]])
+                                      lambda m: MED_GROUPS[m["status"]], check_conflicts=True)
         rows.update({("medications", g): r for g, r in groups.items()})
         extras += extra
     if "labs" in key:
@@ -68,18 +68,22 @@ def main(run):
         print(f"\n{name}")
         for (section, group), s in rows.items():
             print(f"  {section[:4]} {group:<13} {s['found_in_right_group']}/{s['key_items']}"
-                  f"  wrong group: {s['wrong_group']}")
-            t = totals.setdefault((section, group), [0, 0, 0])
+                  f"  wrong group: {s['wrong_group']}  conflicts: {s['conflicts']}")
+            for c in s["conflict_items"]:
+                print(f"      CONFLICT: {c}")
+            t = totals.setdefault((section, group), [0, 0, 0, 0])
             t[0] += s["found_in_right_group"]; t[1] += s["key_items"]; t[2] += s["wrong_group"]
+            t[3] += s["conflicts"]
         if extras:
             print(f"  extra (review by hand): {', '.join(extras)}")
         print(f"  unverified quotes: {q.get('unverified_quotes')} of {q.get('items')}"
               + (f"  |  ${r['cost_usd']:.4f}, {r['total_seconds']}s" if r else ""))
 
     print(f"\nALL HELD-OUT NOTES ({len(keys)})")
-    for (section, group), (found, total, wrong) in totals.items():
+    for (section, group), (found, total, wrong, conflicts) in totals.items():
         recall = f"{found / total:.2f}" if total else "n/a"
-        print(f"  {section[:4]} {group:<13} recall {recall}  ({found}/{total})  wrong group: {wrong}")
+        print(f"  {section[:4]} {group:<13} recall {recall}  ({found}/{total})  wrong group: {wrong}"
+              f"  conflicts: {conflicts}")
     if total_cost:
         print(f"  cost ${total_cost:.4f}, {total_seconds:.0f}s total")
 

@@ -1,8 +1,9 @@
 # Sources and licenses
 
-| Note | Source | License | Link |
+| Note | Source | License | Notes |
 |---|---|---|---|
-| | | | |
+| `asclepius_takotsubo_75m` | [Asclepius Synthetic Clinical Notes](https://huggingface.co/datasets/starmpcc/Asclepius-Synthetic-Clinical-Notes) | CC BY-NC-SA 4.0 | Used unchanged. Discharge summary; sparse labs, drug classes, implausible platelet values left as-is. |
+| `selfwritten_gibleed_61f` | Self-written synthetic note | Project-owned | Answer key written first, note written to match. Designed to test SI units, abbreviations, held/stopped/considered meds, values that change across days. Not an independent test. |
 
 - MTSamples (Kaggle mirror): listed as CC0 public domain.
-- Asclepius Synthetic Clinical Notes: CC BY-NC-SA 4.0. Non-commercial use only, attribution required (Kweon et al., "Publicly Shareable Clinical Large Language Model Built on Synthetic Clinical Notes").
+- Asclepius: non-commercial use only, attribution required. Kweon et al., "Publicly Shareable Clinical Large Language Model Built on Synthetic Clinical Notes" (arXiv:2309.00237).

@@ -28,23 +28,31 @@ def matches(key_entry, extracted_name):
     return any(words(alias) and words(alias) <= name_words for alias in key_entry.split("|"))
 
 
-def score_section(extracted, key_groups, group_of):
+def score_section(extracted, key_groups, group_of, check_conflicts=False):
+    """check_conflicts: if one key item is extracted into two different groups
+    (e.g. a medication both 'given' and 'not_given'), count it as a conflict,
+    not a hit. A nurse would see contradictory information."""
     report, found_any = {}, set()
     for group, key_entries in key_groups.items():
-        found = wrong = 0
-        wrong_items = []
+        found = wrong = conflicts = 0
+        wrong_items, conflict_items = [], []
         for entry in key_entries:
             hits = [e for e in extracted if matches(entry, e["name"])]
             if hits:
                 found_any.update(id(h) for h in hits)
-            if any(group_of(h) == group for h in hits):
+            groups_hit = {group_of(h) for h in hits}
+            if check_conflicts and len(groups_hit) > 1:
+                conflicts += 1
+                conflict_items.append(f"{entry} -> {' and '.join(sorted(groups_hit))}")
+            elif group in groups_hit:
                 found += 1
             elif hits:
                 wrong += 1
                 wrong_items.append(f"{entry} -> {group_of(hits[0])}")
         report[group] = {"key_items": len(key_entries), "found_in_right_group": found,
                          "recall": round(found / len(key_entries), 2) if key_entries else None,
-                         "wrong_group": wrong, "wrong_group_items": wrong_items}
+                         "wrong_group": wrong, "wrong_group_items": wrong_items,
+                         "conflicts": conflicts, "conflict_items": conflict_items}
     extra = [e["name"] for e in extracted if id(e) not in found_any]
     return report, extra
 
@@ -56,7 +64,8 @@ def main(snapshot_path, key_path):
 
     if "medications" in key:
         results["medications"] = score_section(
-            snap["medications"], key["medications"], lambda m: MED_GROUPS[m["status"]])
+            snap["medications"], key["medications"], lambda m: MED_GROUPS[m["status"]],
+            check_conflicts=True)
     if "labs" in key:
         results["labs"] = score_section(
             snap["labs"], key["labs"], lambda l: l["interpretation"])
@@ -65,9 +74,11 @@ def main(snapshot_path, key_path):
         print(f"\n{section.upper()}")
         for group, r in groups.items():
             print(f"  {group:<13} recall {r['recall']}  ({r['found_in_right_group']}/{r['key_items']})"
-                  f"  wrong group: {r['wrong_group']}")
+                  f"  wrong group: {r['wrong_group']}  conflicts: {r['conflicts']}")
             for w in r["wrong_group_items"]:
                 print(f"      wrong: {w}")
+            for c in r["conflict_items"]:
+                print(f"      CONFLICT: {c}")
         if extra:
             print(f"  extra (not in key, review by hand): {', '.join(extra)}")
 

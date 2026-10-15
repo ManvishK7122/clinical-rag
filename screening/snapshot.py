@@ -47,6 +47,7 @@ class Medication(BaseModel):
     dose: Optional[str] = None
     status: Literal["active", "given_once", "held", "discontinued", "considered", "planned"]
     evidence: Evidence
+    status_supported: bool = True
 
 
 class Lab(BaseModel):
@@ -371,6 +372,54 @@ def find_missed_meds(meds, note_text, pages):
         known.add(med.name.lower())
     return added, skipped
 
+# A "not given" status must be backed by the note's own words. The model proposes a
+# status; code checks that the verified quote contains a matching cue word.
+STATUS_CUES = {
+    "discontinued": r"\b(discontinu\w*|d/?c'?d|stopp?\w*|stop|off|de-?escalat\w*|switch\w*|changed|"
+                    r"replac\w*|transition\w*|no longer|ceas\w*|removed|completed)\b",
+    "held": r"\b(held|hold\w*|paus\w*)\b",
+    "considered": r"\b(consider\w*|could|may|might|if|suggest\w*|discuss\w*|decided against|"
+                  r"avoid\w*|defer\w*|possibl\w*|potential\w*|not today)\b",
+    "planned": r"\b(plan\w*|will|start\w*|order\w*|schedul\w*|once|after|then|recommend\w*|"
+               r"prior to|pending|next)\b",
+}
+GENERIC_MED_WORDS = {"infusion", "gtt", "drip", "iv", "po", "home", "oral", "tablet", "tab", "the"}
+
+
+def _med_words(name):
+    return {w for w in re.findall(r"[a-z]+", name.lower()) if w not in GENERIC_MED_WORDS}
+
+
+def same_medication(a, b):
+    """'heparin' and 'heparin infusion' are the same medication; 'insulin' and 'heparin' are not."""
+    wa, wb = _med_words(a), _med_words(b)
+    return bool(wa) and bool(wb) and (wa <= wb or wb <= wa)
+
+
+def check_med_statuses(meds):
+    """Decide in code whether each status is supported by the note.
+
+    - active / given_once: accepted as proposed.
+    - held / discontinued / considered / planned: supported only if the quote is
+      verified AND contains a matching cue word ("stopped", "held", "consider"...).
+    - If the same medication also has a supported, different status, an unsupported
+      entry is dropped (this removes contradictions like "heparin: active AND
+      discontinued" when the note never says it was stopped).
+    - An unsupported entry with no competing entry is kept but flagged for the nurse.
+    Returns (kept, dropped)."""
+    for m in meds:
+        cue = STATUS_CUES.get(m["status"])
+        m["status_supported"] = True if cue is None else bool(
+            m["evidence"]["verified"] and re.search(cue, m["evidence"]["quote"], re.I))
+    kept, dropped = [], []
+    for m in meds:
+        contradicted = not m["status_supported"] and any(
+            o is not m and o["status_supported"] and o["status"] != m["status"]
+            and same_medication(m["name"], o["name"]) for o in meds)
+        (dropped if contradicted else kept).append(m)
+    return kept, dropped
+
+
 def extract_patient(note_text, pages):
     raw = ask_json(PATIENT_PROMPT, note_text)
     try:
@@ -408,12 +457,20 @@ def build_snapshot(filepath):
     snapshot["medications"] += missed
     skipped_total += skipped
     print(f"    {len(missed)} added")
-    
+
+    snapshot["medications"], dropped = check_med_statuses(snapshot["medications"])
+    snapshot["dropped_med_statuses"] = dropped
+    if dropped:
+        print(f"  Dropped {len(dropped)} unsupported medication status(es): "
+              + ", ".join(f"{m['name']} ({m['status']})" for m in dropped))
+
     all_evidence = [i["evidence"] for name in SECTIONS if name in snapshot for i in snapshot[name]]
     snapshot["quality"] = {
         "items": len(all_evidence),
         "unverified_quotes": sum(not e["verified"] for e in all_evidence),
         "malformed_items_skipped": skipped_total,
+        "unsupported_med_statuses_dropped": len(dropped),
+        "unsupported_med_statuses_flagged": sum(not m["status_supported"] for m in snapshot["medications"]),
     }
     return snapshot
 
@@ -433,7 +490,8 @@ def print_snapshot(s):
             print(f"  {status.replace('_', ' ').title()}:")
             for m in meds:
                 dose = f" {m['dose']}" if m.get("dose") else ""
-                print(f"    - {m['name']}{dose} {_cite(m['evidence'])}")
+                flag = "" if m.get("status_supported", True) else "  [STATUS NOT CONFIRMED BY NOTE]"
+                print(f"    - {m['name']}{dose} {_cite(m['evidence'])}{flag}")
     print("\nLABS")
     for interp in ["abnormal", "not_abnormal", "not_labeled"]:
         labs = [l for l in s["labs"] if l["interpretation"] == interp]
